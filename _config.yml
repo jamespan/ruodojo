@@ -1,12 +1,12 @@
-site: JamesPan's Blog
+site: 鶸道场
 
 collections:
   pages:
     output: true
-    permalink: /:name/
+    permalink: /:name
   posts:
     output: true
-    permalink: /posts/:slug/
+    permalink: /posts/:slug
 
 defaults:
   -
