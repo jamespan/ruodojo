@@ -3,13 +3,10 @@ site: JamesPan's Blog
 collections:
   pages:
     output: true
-    permalink: /:name
+    permalink: /:name/
   posts:
     output: true
-    permalink: /posts/:slug
-  projects:
-    output: true
-    permalink: /project/:slug
+    permalink: /posts/:slug/
 
 defaults:
   -
