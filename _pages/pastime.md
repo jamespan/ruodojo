@@ -1,6 +1,6 @@
 ---
 title: Pastime
-featured_image: 'https://ws3.sinaimg.cn/mw1024/006tNbRwly1fxaxjiumpwj318z0u0at2.jpg'
+featured_image: 'https://ws3.sinaimg.cn/large/006tNbRwly1fxaxjiumpwj318z0u0at2.jpg'
 ---
 
 也许你听说过，「业余时间决定人生」；也许你还听说过，「听过很多道理，依然过不好这一生」。书籍、代码、博客、运动、电影、动漫、美剧、游戏，这就是我的业余生活。
