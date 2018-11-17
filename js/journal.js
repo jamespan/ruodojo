@@ -82,8 +82,8 @@
 					featuredImage = newFeaturedImage;
 
 					// Change and animate featured image
-					$('.header-image:not(.header-image--on').css('background-image', 'url(' + featuredImage + ')');
-					$('.header-image:not(.header-image--on').addClass('header-image--switch');
+					$('.header-image:not(.header-image--on)').css('background-image', 'url(' + featuredImage + ')');
+					$('.header-image:not(.header-image--on)').addClass('header-image--switch');
 
 					$('.header-image--switch').imagesLoaded( { background: true }, function() {
 						$('.header-image--on').removeClass('header-image--on');
