@@ -11,3 +11,5 @@ featured_image: 'https://ws4.sinaimg.cn/large/006tNbRwly1fy25lxvby7j30u00u0qv5.j
 <!-- more -->
 
 9 月的最后一天，我如愿拿到驾照。随后开始谋划车牌与购车等各种事情。
+
+在杭州，车牌发放量是受政府严格管制的，每个月只有通过摇号或者竞拍两种途径获得车牌。
