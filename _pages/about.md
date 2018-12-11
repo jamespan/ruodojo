@@ -12,5 +12,5 @@ featured_image: 'https://ws4.sinaimg.cn/large/006tNbRwly1fx3cdlbe0vj31kw1kw1kx.j
 综上所述，一条单身狗
 
 + E-mail: [panjiabang@gmail.com](mailto:panjiabang@gmail.com)
-+ Github: [@JamesPan](https://github.com/JamesPan)
++ Github: [@jamespan](https://github.com/jamespan)
 + Weibo : [@潘小鶸](http://weibo.com/panjiabang)
