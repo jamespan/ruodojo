@@ -9,6 +9,6 @@ featured_image: 'https://ws4.sinaimg.cn/large/006tNbRwly1fx3cdlbe0vj31kw1kw1kx.j
 
 业余生活逃不出写代码、[读书、看电影](/pastime)、健身这几件事，偶尔写点博客
 
-+ E-mail: [panjiabang@gmail.com](mailto:panjiabang@gmail.com)
++ E-mail: panjiabang@gmail.com
 + Github: [@jamespan](https://github.com/jamespan)
 + Weibo : [@潘小鶸](http://weibo.com/panjiabang)
