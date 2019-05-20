@@ -159,7 +159,7 @@ advanced_settings:
 
 ribbon_settings:
   enable: true
-  image: "https://raw.githubusercontent.com/d2-projects/d2-ribbons/master/ribbons/flat-opacity-icon/github/right/green@2x.png"
+  image: "https://raw.githubusercontent.com/d2-projects/d2-ribbons/master/ribbons/flat-opacity-icon/github/right/green.png"
   alt: "Fork me on Github"
   repo: "https://github.com/jamespan/ruodojo"
   position: "right"
