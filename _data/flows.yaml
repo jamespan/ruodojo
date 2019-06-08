@@ -4,13 +4,25 @@ pastime:
     img: 'http://ww2.sinaimg.cn/bmiddle/006tNc79gy1g3u8ex1blsj30jj0rjafl.jpg'
     url: 'https://book.douban.com/subject/26875262/'
   -
+    title: 我要准时下班
+    img: 'http://ww4.sinaimg.cn/bmiddle/006tNc79gy1g3u9367t53j30u0140n25.jpg'
+    url: 'https://movie.douban.com/subject/30442376/'
+  -
     title: 如影随心
     img: 'http://ww1.sinaimg.cn/bmiddle/006tNc79gy1g3u8wzhho7j30u0160wj8.jpg'
     url: 'https://movie.douban.com/subject/26871669/'
   -
+    title: 亲密关系（第5版）
+    img: 'http://ww4.sinaimg.cn/bmiddle/006tNc79gy1g3u8zk3pkhj30de0iwq5m.jpg'
+    url: 'https://book.douban.com/subject/5952488/'
+  -
     title: 调音师
     img: 'http://ww3.sinaimg.cn/bmiddle/006tNc79gy1g3u8v7mdrlj30u015zn5m.jpg'
     url: 'https://movie.douban.com/subject/30334073/'
+  -
+    title: 不能成为野兽的我们
+    img: 'http://ww2.sinaimg.cn/bmiddle/006tNc79gy1g3u92523l9j30u0140wri.jpg'
+    url: 'https://movie.douban.com/subject/30290917/'
   -
     title: 新喜剧之王
     img: 'http://ww1.sinaimg.cn/bmiddle/006tNc79gy1g3u8rqi5gij30u0168dvn.jpg'
@@ -23,6 +35,10 @@ pastime:
     title: 飞驰人生
     img: 'http://ww2.sinaimg.cn/bmiddle/006tNc79gy1g3u8q43x0ej30u0160wus.jpg'
     url: 'https://movie.douban.com/subject/30163509/'
+  -
+    title: 万历十五年
+    img: 'http://ww1.sinaimg.cn/bmiddle/006tNc79gy1g3u90yg61fj30go0nbmyn.jpg'
+    url: 'https://book.douban.com/subject/1858410/'
   -
     title: 海王毒液：致命守护者
     img: 'http://ww1.sinaimg.cn/bmiddle/006tNc79gy1g3u8u2leutj30u016fam4.jpg'
