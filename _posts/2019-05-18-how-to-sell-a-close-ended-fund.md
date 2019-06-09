@@ -1,7 +1,7 @@
 ---
 title: '提前赎回处于封闭期的基金'
 date: 2019-05-18
-featured_image: 'http://ww3.sinaimg.cn/large/006tNc79gy1g35z3x2y5dj30rs0iiaeu.jpg'
+featured_image: 'https://ww3.sinaimg.cn/large/006tNc79gy1g35z3x2y5dj30rs0iiaeu.jpg'
 ---
 
 18 年中，有一个封闭三年的基金「兴全合宜」吸引了我的注意。作为我投资的第二个封闭式基金，兴全合宜以其跌得比大盘厉害，涨得比大盘慢得骄傲姿态，令我非常不满。考虑到我近期的资金需求，这个无端锁定我可观资金的劣质基金，成了我割肉的目标。宁愿把浮亏变成实亏，也要拿回资金的流动性。
