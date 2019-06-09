@@ -158,7 +158,7 @@ advanced_settings:
   footer_js: ""
 
 ribbon_settings:
-  enable: true
+  enable: false
   image: "https://raw.githubusercontent.com/d2-projects/d2-ribbons/master/ribbons/flat-opacity-icon/github/right/green.png"
   alt: "Fork me on Github"
   repo: "https://github.com/jamespan/ruodojo"
