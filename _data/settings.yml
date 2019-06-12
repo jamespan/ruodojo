@@ -14,7 +14,7 @@ menu_settings:
       url: '/'
     - title: '关于'
       url: '/about'
-    - title: '消遣'
+    - title: '消愁'
       url: '/pastime'
 
 grid_settings:

@@ -1,5 +1,5 @@
 ---
-title: About
+title: 关于
 featured_image: 'https://ws4.sinaimg.cn/large/006tNbRwly1fx3cdlbe0vj31kw1kw1kx.jpg'
 ---
 
