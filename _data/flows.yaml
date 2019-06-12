@@ -1,5 +1,17 @@
 pastime:
   -
+    title: 男人的玩具
+    img: 'https://ww2.sinaimg.cn/bmiddle/006tNc79gy1g3yq61zemkj307t0dw75r.jpg'
+    url: 'https://book.douban.com/subject/26297197/'
+  -
+    title: 老后破产
+    img: 'https://ww2.sinaimg.cn/bmiddle/006tNc79gy1g3yq52zo1gj30u016kdsp.jpg'
+    url: 'https://book.douban.com/subject/30143251/'
+  -
+    title: 格调
+    img: 'https://ww3.sinaimg.cn/bmiddle/006tNc79gy1g3yq45dy6bj30gf0nmabk.jpg'
+    url: 'https://book.douban.com/subject/26948144/'
+  -
     title: 千夫所指
     img: 'https://ww2.sinaimg.cn/bmiddle/006tNc79gy1g3u8ex1blsj30jj0rjafl.jpg'
     url: 'https://book.douban.com/subject/26875262/'
