@@ -10,11 +10,11 @@ header_settings:
 
 menu_settings:
   menu_items:
-    - title: 'Home'
+    - title: '主页'
       url: '/'
-    - title: 'About'
+    - title: '关于'
       url: '/about'
-    - title: 'Pastime'
+    - title: '消遣'
       url: '/pastime'
 
 grid_settings:
