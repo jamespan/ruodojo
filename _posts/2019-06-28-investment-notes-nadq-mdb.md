@@ -14,7 +14,7 @@ featured_image: 'https://ww2.sinaimg.cn/large/006tNc79gy1g4hdfq5kh8j30sw0fk74v.j
 
 ![](https://ww2.sinaimg.cn/large/006tNc79gy1g4hdlti9pxj30v90bzq4c.jpg)
 
-我现在的水平，做空还是有点忐忑的，不敢过周末，28 日差不多差不多就卖了，挣个饭钱也是美滋滋。
+我现在的水平，做空还是有点忐忑的，不敢过周末，周五看着差不多差不多就平仓了，挣个饭钱也是美滋滋。
 
 ![](https://ww3.sinaimg.cn/large/006tNc79gy1g4hdrxti5bj30u01eoaj4.jpg)
 
