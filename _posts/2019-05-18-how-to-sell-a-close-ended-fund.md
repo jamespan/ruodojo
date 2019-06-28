@@ -18,7 +18,7 @@ featured_image: 'https://ww3.sinaimg.cn/large/006tNc79gy1g35z3x2y5dj30rs0iiaeu.j
 
 然而基金转到券商之后，我还是费了好多力气，才成功将基金转到了场内然后卖出，少亏当赚了。
 
-![](https://ww3.sinaimg.cn/large/006tNc79gy1g4hbzfaxxhj30v90rgmzy.jpg)
+![](https://ww3.sinaimg.cn/large/006tNc79gy1g4hcvtb794j30v90r6q5i.jpg)
 
 当初我花了 50000 大洋，从银行渠道购买基金，却只有 49409 份额，那 591 份额被狗吃了吗？还真差不多，反正给银行交手续费了，算起来手续费也是 1.2% 呢。
 
