@@ -67,9 +67,9 @@ color_settings:
   error_color: '#D64541'
 
 font_settings:
-  font_embed: '<link href="https://fonts.lug.ustc.edu.cn/css?family=Arvo:300,400|Muli:400,400i,600" rel="stylesheet">'
+  font_embed: '<link href="https://fonts.lug.ustc.edu.cn/css?family=Arvo:300,400|Noto+Sans+SC:400,700&display=swap&subset=chinese-simplified" rel="stylesheet">'
   title_font: '"Arvo", sans-serif'
-  body_font: '"Muli", sans-serif'
+  body_font: '"Arvo", "Noto Sans SC", sans-serif'
   regular_weight: 400
   bold_weight: 600
   site_title:
