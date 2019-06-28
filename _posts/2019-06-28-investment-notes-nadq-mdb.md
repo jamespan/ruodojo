@@ -1,5 +1,5 @@
 ---
-title: '投资笔记：DADQ MDB'
+title: '投资笔记：NADQ MDB'
 date: 2019-06-28
 featured_image: 'https://ww2.sinaimg.cn/large/006tNc79gy1g4hdfq5kh8j30sw0fk74v.jpg'
 ---
