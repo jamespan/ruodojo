@@ -4,7 +4,7 @@ date: 2019-06-28
 featured_image: 'https://ww2.sinaimg.cn/large/006tNc79gy1g4hdfq5kh8j30sw0fk74v.jpg'
 ---
 
-自从6月5日盘后财报出来，MDB 股价跳涨一波，紧接着开启了横盘然后下行的趋势。
+自从 6 月 5 日盘后财报出来，MDB 股价跳涨一波，紧接着开启了横盘然后下行的趋势。
 
 <!-- more -->
 
