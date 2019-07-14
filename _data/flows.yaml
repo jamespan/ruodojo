@@ -1,5 +1,13 @@
 pastime:
   -
+    title: 狮子王
+    img: 'http://ww3.sinaimg.cn/bmiddle/006tNc79gy1g4zujqvbqqj30u016udvx.jpg'
+    url: 'https://movie.douban.com/subject/26884354/'
+  -
+    title: 沉默的大多数
+    img: 'https://ww4.sinaimg.cn/bmiddle/006tNc79gy1g4zuibmdo0j30u0167wij.jpg'
+    url: 'https://book.douban.com/subject/27013716/'
+  -
     title: 别扭合租房
     img: 'https://ww1.sinaimg.cn/bmiddle/006tNc79gy1g4bh6e8jscj30jg0rjtb6.jpg'
     url: 'https://movie.douban.com/subject/33379429/'
