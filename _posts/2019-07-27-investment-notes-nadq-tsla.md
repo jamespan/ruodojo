@@ -1,5 +1,5 @@
 ---
-title: '赌博笔记：NADQ TSLA'
+title: '🚧赌博笔记：NADQ TSLA'
 date: 2019-07-27
 featured_image: 'https://ww2.sinaimg.cn/large/006tNc79gy1g5e4kpbqwnj30zk0k0dic.jpg'
 ---
