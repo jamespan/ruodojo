@@ -35,7 +35,7 @@ featured_image: 'https://ww2.sinaimg.cn/large/006tNc79gy1g5e4kpbqwnj30zk0k0dic.j
 
 洗澡回来一看，什么鬼，这怎么一条线垂直下来了，这还是特斯拉的股价吗？是不是我看错了？
 
-![](https://ww1.sinaimg.cn/large/006tNc79gy1g5eqo0zn2cj30th0h60v1.jpg)
+![](https://ww4.sinaimg.cn/large/006tNc79gy1g5eszrct24j30tf0h8jtp.jpg)
 
 定睛一看，还真是特斯拉的，股价从 $265+ 直接一波跌到 $240+。我又等了一会，股价居然还小小反弹了一下，扛不住落袋为安的诱惑，我直接挂单 $245 给平仓了。
 
