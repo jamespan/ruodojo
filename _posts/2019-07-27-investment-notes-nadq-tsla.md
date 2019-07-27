@@ -46,4 +46,6 @@ featured_image: 'https://ww2.sinaimg.cn/large/006tNc79gy1g5e4kpbqwnj30zk0k0dic.j
 
 ![](https://ww1.sinaimg.cn/large/006tNc79gy1g5er59cmcgj30u00u0tj3.jpg)
 
+挣多挣少看天意，亏多亏少看纪律。
+
 [1]: /posts/investment-notes-nyse-levi
