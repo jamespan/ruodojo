@@ -121,8 +121,14 @@
 	}
 
 	blockquote p {
+		text-align: center;
+		font-size: $blockquote-medium;
 		max-width: 100%;
 		padding: 0;
+	}
+
+	blockquote cite {
+		font-size: $blockquote-small;
 	}
 
 	p a {
