@@ -1,5 +1,15 @@
 pastime:
   -
+    title: 速度与激情：特别行动
+    img: 'https://tva1.sinaimg.cn/bmiddle/006y8mN6ly1g6jb9jxmxfj30qb15o14j.jpg'
+    url: 'https://movie.douban.com/subject/27163278/'
+  -
+  -
+    title: 送我上青云
+    img: 'https://tva1.sinaimg.cn/bmiddle/006y8mN6ly1g6jb8g24uyj30u016ntio.jpg'
+    url: 'https://movie.douban.com/subject/27180759/'
+  -
+  -
     title: 银河补习班
     img: 'https://ww4.sinaimg.cn/bmiddle/006tNc79gy1g5h4dwbylvj30u016cqc4.jpg'
     url: 'https://movie.douban.com/subject/30282387/'
