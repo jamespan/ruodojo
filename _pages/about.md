@@ -12,3 +12,9 @@ featured_image: 'https://ws4.sinaimg.cn/large/006tNbRwly1fx3cdlbe0vj31kw1kw1kx.j
 + E-mail: panjiabang@gmail.com
 + Github: [@jamespan](https://github.com/jamespan)
 + Weibo : [@潘小鶸](http://weibo.com/panjiabang)
+
+### 证书
+
+<div class="gallery" data-columns="1">
+    <img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g6lkio14pij312u0u0jvm.jpg">
+</div>
