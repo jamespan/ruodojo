@@ -16,6 +16,8 @@ menu_settings:
       url: '/about'
     - title: '销愁'
       url: '/pastime'
+    - title: '检索'
+      url: '/search'
 
 grid_settings:
   grid_spacing: 10
