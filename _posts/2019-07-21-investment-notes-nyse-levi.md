@@ -1,24 +1,24 @@
 ---
 title: '投资笔记：NYSE LEVI'
 date: 2019-07-21
-featured_image: 'https://ww3.sinaimg.cn/large/006tNc79gy1g57wbxcgqpj30xc0do3zm.jpg'
+featured_image: 'https://tva3.sinaimg.cn/large/006tNc79gy1g57wbxcgqpj30xc0do3zm.jpg'
 ---
 
 作为一个 Levis 牛仔服饰的消费者，自从今年 3 月 Levis 上市以来，一直陆续关注它的股价。6 月下旬看到富途牛牛提示说，7 月 9 日盘后发布财报，我自然就打算赌一波财报了。
 
 <!-- more -->
 
-![](https://ww2.sinaimg.cn/large/006tNc79gy1g57vhcgz6sj30y50hxgps.jpg)
+![](https://tva2.sinaimg.cn/large/006tNc79gy1g57vhcgz6sj30y50hxgps.jpg)
 
 可以看到在买入点之前，从 6 月 20 日开始，股价基本在 MA5 之下，呈现下行趋势。直到 27 日箱线翻红，我预计下行趋势将要终止，就在 28 日择机进入，以略低于日内均线的价格买入。
 
-![](https://ww1.sinaimg.cn/large/006tNc79gy1g57voxlwkpj30w80k2whe.jpg)
+![](https://tva1.sinaimg.cn/large/006tNc79gy1g57voxlwkpj30w80k2whe.jpg)
 
 我现在交易股票的纪律，就是谨守 7% 的止损线，允许回撤的同时避免更大的损失。
 
 结果接下来的一周，股价波动的结果，只有极少数的时间低于我的成本价，一路上涨来到了 7 月 9 日。
 
-![](https://ww1.sinaimg.cn/large/006tNc79gy1g57vu64aeoj30w80k2n3a.jpg)
+![](https://tva1.sinaimg.cn/large/006tNc79gy1g57vu64aeoj30w80k2n3a.jpg)
 
 开盘直接一波下挫，我没扛住压力就空仓了。事后看起来，如果能晚几小时再出手会更好。
 

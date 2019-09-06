@@ -1,7 +1,7 @@
 ---
 title: '提前赎回处于封闭期的基金'
 date: 2019-05-18
-featured_image: 'https://ww3.sinaimg.cn/large/006tNc79gy1g35z3x2y5dj30rs0iiaeu.jpg'
+featured_image: 'https://tva3.sinaimg.cn/large/006tNc79gy1g35z3x2y5dj30rs0iiaeu.jpg'
 ---
 
 18 年中，有一个封闭三年的基金「兴全合宜」吸引了我的注意。作为我投资的第二个封闭式基金，兴全合宜以其跌得比大盘厉害，涨得比大盘慢得骄傲姿态，令我非常不满。考虑到我近期的资金需求，这个无端锁定我可观资金的劣质基金，成了我割肉的目标。宁愿把浮亏变成实亏，也要拿回资金的流动性。
@@ -18,18 +18,18 @@ featured_image: 'https://ww3.sinaimg.cn/large/006tNc79gy1g35z3x2y5dj30rs0iiaeu.j
 
 然而基金转到券商之后，我还是费了好多力气，才成功将基金转到了场内然后卖出，少亏当赚了。
 
-![](https://ww3.sinaimg.cn/large/006tNc79gy1g4hcvtb794j30v90r6q5i.jpg)
+![](https://tva3.sinaimg.cn/large/006tNc79gy1g4hcvtb794j30v90r6q5i.jpg)
 
 当初我花了 50000 大洋，从银行渠道购买基金，却只有 49409 份额，那 591 份额被狗吃了吗？还真差不多，反正给银行交手续费了，算起来手续费也是 1.2% 呢。
 
 买卖基金也得找一个手续费低廉的渠道，银行恰恰是所有渠道里手续费最高的，血亏。
 
-![](https://ww1.sinaimg.cn/large/006tNc79gy1g4hci52f5wj30v90gqgnl.jpg)
+![](https://tva1.sinaimg.cn/large/006tNc79gy1g4hci52f5wj30v90gqgnl.jpg)
 
 最终我一笔把这 50000 份额卖了 48850 大洋，卖出价 0.989，扣了 15 块钱手续费。算下来总体亏了 1150 大洋。
 
 这笔钱终于又活起来了，感觉真好。
 
-![](https://ww1.sinaimg.cn/large/006tNc79gy1g4hcqvcf2aj30u01i342n.jpg)
+![](https://tva1.sinaimg.cn/large/006tNc79gy1g4hcqvcf2aj30u01i342n.jpg)
 
 回血就指望 MongoDB 了！做空两天挣个饭钱美滋滋~

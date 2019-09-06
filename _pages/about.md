@@ -1,6 +1,6 @@
 ---
 title: 关于
-featured_image: 'https://ws4.sinaimg.cn/large/006tNbRwly1fx3cdlbe0vj31kw1kw1kx.jpg'
+featured_image: 'https://tva4.sinaimg.cn/large/006tNbRwly1fx3cdlbe0vj31kw1kw1kx.jpg'
 ---
 
 小鶸一枚，除了 Java、Kotlin、Python 和 Golang，其他语言都没生产环境经验的代码渣

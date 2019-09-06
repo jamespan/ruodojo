@@ -1,7 +1,7 @@
 ---
 title: '赌博笔记：NADQ TSLA'
 date: 2019-07-27
-featured_image: 'https://ww2.sinaimg.cn/large/006tNc79gy1g5e4kpbqwnj30zk0k0dic.jpg'
+featured_image: 'https://tva2.sinaimg.cn/large/006tNc79gy1g5e4kpbqwnj30zk0k0dic.jpg'
 ---
 
 特斯拉的股价，我也是在关注的。之前风光无限，股价一度高达 $389，不过前些日子刚从 6 月 3 日的极小值 $176 走出来，一个月的上涨趋势把股价带到 $250+。7 月 24 日盘后发布财报，我决定赌一把，搏一搏单车变摩托。
@@ -19,11 +19,11 @@ featured_image: 'https://ww2.sinaimg.cn/large/006tNc79gy1g5e4kpbqwnj30zk0k0dic.j
 
 美股好就好在，看好就做多，不看好就做空，用钱投票不废话，风险自负。所以看到那些鼓吹美股崩溃论的自媒体文章，我总是不屑一顾地想，博主这么信誓旦旦地说美股要崩，有种赌身家做个空试试，真要崩溃做空成功也够吃好些年了，还写个鬼的自媒体。
 
-![](https://ww3.sinaimg.cn/large/006tNc79gy1g5eplhpuohj30w80k20vw.jpg)
+![](https://tva3.sinaimg.cn/large/006tNc79gy1g5eplhpuohj30w80k20vw.jpg)
 
 到现在我都不知道我在 09:38 是怎么做到以 $262 的价格做空的，明明事后看分钟级 K 线图，那一分钟的最高价不过 $260.5，真是个未解之谜。
 
-![](https://ww3.sinaimg.cn/large/006tNc79gy1g5eprc9n94j30w80k2dn6.jpg)
+![](https://tva3.sinaimg.cn/large/006tNc79gy1g5eprc9n94j30w80k2dn6.jpg)
 
 逆势操作真的很煎熬啊，看着股价一路涨我也跟着一路空，我这一波操作已经完全违背趋势交易教给我的操作逻辑了，完全就是韭菜的交易方法，越亏越补。
 
@@ -37,13 +37,13 @@ featured_image: 'https://ww2.sinaimg.cn/large/006tNc79gy1g5e4kpbqwnj30zk0k0dic.j
 
 洗澡回来一看，什么鬼，这怎么一条线垂直下来了，这还是特斯拉的股价吗？是不是我看错了？
 
-![](https://ww4.sinaimg.cn/large/006tNc79gy1g5eszrct24j30tf0h8jtp.jpg)
+![](https://tva4.sinaimg.cn/large/006tNc79gy1g5eszrct24j30tf0h8jtp.jpg)
 
 定睛一看，还真是特斯拉的，股价从 $265+ 直接一波跌到 $240+。我又等了一会，股价居然还小小反弹了一下，扛不住落袋为安的诱惑，我直接挂单 $245 给平仓了。
 
 啊，我没错，是市场错了！盘前的市场错了！这一刻，我股神附体！太激动了没截图，这会总结的时候就截不到当天盘后的详细分时了。
 
-![](https://ww3.sinaimg.cn/large/006tNc79gy1g5equespu0j30us0l8wkf.jpg)
+![](https://tva3.sinaimg.cn/large/006tNc79gy1g5equespu0j30us0l8wkf.jpg)
 
 虽然这一波下来，小挣了一笔，但是整个过程不仅煎熬，风险也不小，如果财报和我判断的方向相悖，而我盘前又没有及时止损，恐怕亏空就远不止挣的这笔了。
 
@@ -51,7 +51,7 @@ featured_image: 'https://ww2.sinaimg.cn/large/006tNc79gy1g5e4kpbqwnj30zk0k0dic.j
 
 今后还是要坚守右侧交易，不要轻易赌博。这不才过了几天，又头脑发热做空特斯拉，还在朋友圈扬言「生死看淡，不服就干」，结果亏到吃土，半夜股价击穿我预先设置的止损条简单自动平仓了。
 
-![](https://ww1.sinaimg.cn/large/006tNc79gy1g5er59cmcgj30u00u0tj3.jpg)
+![](https://tva1.sinaimg.cn/large/006tNc79gy1g5er59cmcgj30u00u0tj3.jpg)
 
 挣多挣少看天意，亏多亏少看纪律。
 

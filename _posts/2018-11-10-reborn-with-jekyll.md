@@ -1,7 +1,7 @@
 ---
 title: '懒人的博客，由 Jekyll 驱动'
 date: 2018-11-10 09:44:00
-featured_image: 'https://ws3.sinaimg.cn/large/006tNbRwly1fx3biu1y2mj30rs0go0tp.jpg'
+featured_image: 'https://tva3.sinaimg.cn/large/006tNbRwly1fx3biu1y2mj30rs0go0tp.jpg'
 ---
 
 年龄渐长，很多东西都看开了。
