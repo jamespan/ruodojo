@@ -1,5 +1,9 @@
 pastime:
   -
+    title: 小丑
+    img: 'https://tva1.sinaimg.cn/bmiddle/006y8mN6ly1g8wc6ecsvvj30u018gk04.jpg'
+    url: 'https://movie.douban.com/subject/27119724/'
+  -
     title: 牯岭街少年杀人事件
     img: 'https://tva1.sinaimg.cn/bmiddle/006y8mN6ly1g8srp9rdn4j30bs0godgt.jpg'
     url: 'https://movie.douban.com/subject/1292329/'
