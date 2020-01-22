@@ -56,6 +56,10 @@ pastime:
     img: 'https://tva1.sinaimg.cn/bmiddle/006y8mN6ly1g8srv3vuumj30ku0rs7ad.jpg'
     url: 'https://movie.douban.com/subject/27133050/'
   -
+    title: 寄生虫
+    img: 'https://tva1.sinaimg.cn/bmiddle/006tNbRwly1gb55rfxyk9j30j60rbjxx.jpg'
+    url: 'https://movie.douban.com/subject/27010768/'
+  -
     title: 沉睡魔咒2
     img: 'https://tva1.sinaimg.cn/bmiddle/006y8mN6ly1g8srsl0glbj30u018eqdq.jpg'
     url: 'https://movie.douban.com/subject/26426056/'
