@@ -1,5 +1,17 @@
 pastime:
   -
+    title: 孟买酒店
+    img: 'https://tva1.sinaimg.cn/bmiddle/0082zybply1gbo8hgxauoj30l20u0n1k.jpg'
+    url: 'https://movie.douban.com/subject/26794701/'
+  -
+    title: 小妇人
+    img: 'https://tva1.sinaimg.cn/bmiddle/0082zybply1gbo8fq11gjj30u018f48d.jpg'
+    url: 'https://movie.douban.com/subject/26348103/'
+  -
+    title: 极速车王
+    img: 'https://tva1.sinaimg.cn/bmiddle/0082zybply1gbo8it22vcj30u018gqa6.jpg'
+    url: 'https://movie.douban.com/subject/6538866/'
+  -
     title: 囧妈
     img: 'https://tva1.sinaimg.cn/bmiddle/006tNbRwly1gb8srn2pbmj30u019ah1o.jpg'
     url: 'https://movie.douban.com/subject/30306570/'
@@ -7,6 +19,10 @@ pastime:
     title: 醉乡民谣
     img: 'https://tva1.sinaimg.cn/bmiddle/006tNbRwly1gb7lz9rfeaj30u016fajz.jpg'
     url: 'https://movie.douban.com/subject/6887029/'
+  -
+    title: 婚姻故事
+    img: 'https://tva1.sinaimg.cn/bmiddle/0082zybply1gbo8ei90jmj30u019utkb.jpg'
+    url: 'https://movie.douban.com/subject/27202818/'
   -
     title: 宠爱
     img: 'https://tva1.sinaimg.cn/bmiddle/006tNbRwly1gb5566thq0j30u015zwpi.jpg'
