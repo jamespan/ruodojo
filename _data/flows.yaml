@@ -1,8 +1,21 @@
 pastime:
+
   -
-    title: 孟买酒店
-    img: 'https://tva1.sinaimg.cn/bmiddle/0082zybply1gbo8hgxauoj30l20u0n1k.jpg'
-    url: 'https://movie.douban.com/subject/26794701/'
+    title: 下辈子我再给好好过
+    img: 'https://tva1.sinaimg.cn/bmiddle/00831rSTly1gdb3j38d1zj30p00frjv1.jpg'
+    url: 'https://movie.douban.com/subject/34906701/'
+  -
+    title: 王国
+    img: 'https://tva1.sinaimg.cn/bmiddle/00831rSTly1gdb3i6ngtfj30u018fqot.jpg'
+    url: 'https://movie.douban.com/subject/26947951/'
+  -
+    title: 谁先爱上他的
+    img: 'https://tva1.sinaimg.cn/bmiddle/00831rSTly1gdb3gsdp5oj30u0187qdh.jpg'
+    url: 'https://movie.douban.com/subject/27119586/'
+  -
+    title: 无主之作
+    img: 'https://tva1.sinaimg.cn/bmiddle/00831rSTly1gdb3g4niy0j307i0am0t9.jpg'
+    url: 'https://movie.douban.com/subject/26701196/'
   -
     title: 小妇人
     img: 'https://tva1.sinaimg.cn/bmiddle/0082zybply1gbo8fq11gjj30u018f48d.jpg'
