@@ -1,7 +1,7 @@
 ---
 title: '懒人翻书不动手'
 date: 2020-04-11
-featured_image: 'https://tva1.sinaimg.cn/large/0082zybply1gbo8ahd6awj30w90i50tr.jpg'
+featured_image: 'https://tva1.sinaimg.cn/large/007S8ZIlly1gdpsocevjtj30hs0hs76j.jpg'
 ---
 
 今天在 Macbook 上看 PDF，突然懒癌发作，不想动手翻页。想到 AppleScript 似乎可以做一些 GUI 的自动化，是不是可以每隔一段时间，就帮我划一下触摸板，把书往上翻一翻呢？
