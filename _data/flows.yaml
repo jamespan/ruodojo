@@ -1,5 +1,5 @@
-
 pastime:
+
   -
     title: 重版出来
     img: 'https://tva1.sinaimg.cn/bmiddle/007S8ZIlly1gdprbl0bm1j30fq0m8n08.jpg'
@@ -20,7 +20,7 @@ pastime:
     title: 血疫
     img: 'https://tva1.sinaimg.cn/bmiddle/00831rSTly1gdb4202yv1j30u018ggqi.jpg'
     url: 'https://movie.douban.com/subject/26581181/'
- -
+  -
     title: 王国
     img: 'https://tva1.sinaimg.cn/bmiddle/00831rSTly1gdb3i6ngtfj30u018fqot.jpg'
     url: 'https://movie.douban.com/subject/26947951/'
