@@ -1,5 +1,10 @@
+
 pastime:
 
+  -
+    title: 重版出来
+    img: 'https://tva1.sinaimg.cn/bmiddle/007S8ZIlly1gdprbl0bm1j30fq0m8n08.jpg'
+    url: 'https://movie.douban.com/subject/26602304/'
   -
     title: 让时间陪你慢慢变富
     img: 'https://tva1.sinaimg.cn/bmiddle/00831rSTly1gdb3p4jfvuj30ep0m8gmi.jpg'
@@ -13,6 +18,10 @@ pastime:
     img: 'https://tva1.sinaimg.cn/bmiddle/00831rSTly1gdb3j38d1zj30p00frjv1.jpg'
     url: 'https://movie.douban.com/subject/34906701/'
   -
+    title: 血疫
+    img: 'https://tva1.sinaimg.cn/bmiddle/00831rSTly1gdb4202yv1j30u018ggqi.jpg'
+    url: 'https://movie.douban.com/subject/26581181/'
+ -
     title: 王国
     img: 'https://tva1.sinaimg.cn/bmiddle/00831rSTly1gdb3i6ngtfj30u018fqot.jpg'
     url: 'https://movie.douban.com/subject/26947951/'
@@ -24,6 +33,18 @@ pastime:
     title: 无主之作
     img: 'https://tva1.sinaimg.cn/bmiddle/00831rSTly1gdb3g4niy0j307i0am0t9.jpg'
     url: 'https://movie.douban.com/subject/26701196/'
+  -
+    title: '硅谷 第六季'
+    img: 'https://tva1.sinaimg.cn/bmiddle/00831rSTly1gdb45uhpr1j30e60kzjt7.jpg'
+    url: 'https://movie.douban.com/subject/30194648/'
+  -
+    title: 我们与恶的距离
+    img: 'https://tva1.sinaimg.cn/bmiddle/00831rSTly1gdb43g26xdj30u016uh0e.jpg'
+    url: 'https://movie.douban.com/subject/30181230/'
+ -
+    title: 想见你
+    img: 'https://tva1.sinaimg.cn/bmiddle/00831rSTly1gdb44jk48sj30u015z100.jpg'
+    url: 'https://movie.douban.com/subject/30468961/'
   -
     title: 小妇人
     img: 'https://tva1.sinaimg.cn/bmiddle/0082zybply1gbo8fq11gjj30u018f48d.jpg'
