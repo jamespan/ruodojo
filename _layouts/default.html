@@ -8,7 +8,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
 	<!-- Page Info -->
-	<link rel="shortcut icon" href="{{ site.data.settings.basic_settings.favicon_image }}">
+	<link rel="shortcut icon" href="{% if site.data.settings.cdn_settings.jsdelivr.enable %}//{{ site.data.settings.cdn_settings.jsdelivr.uri }}{% endif %}{{ site.data.settings.basic_settings.favicon_image }}">
 	<title>{% if page.url == "/" %}{{ site.data.settings.basic_settings.site_title }} - {{ page.title }}{% else %}{{ page.title }} - {{ site.data.settings.basic_settings.site_title }}{% endif %}</title>
 	<meta name="description" content="{{ page.description }}">
 
@@ -86,7 +86,7 @@
 
 
 	<!-- Javascript Assets -->
-	<script src="https://ajax.lug.ustc.edu.cn/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="{% if site.data.settings.cdn_settings.jsdelivr.enable %}//{{ site.data.settings.cdn_settings.jsdelivr.uri }}{% endif %}/js/jquery.min.js"></script>
 	<script src="{% if site.data.settings.cdn_settings.jsdelivr.enable %}//{{ site.data.settings.cdn_settings.jsdelivr.uri }}{% endif %}/js/journal-min.js"></script>
 
 	{% if site.data.settings.advanced_settings.footer_js %}
