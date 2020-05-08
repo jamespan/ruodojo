@@ -165,3 +165,8 @@ ribbon_settings:
   alt: "Fork me on Github"
   repo: "https://github.com/jamespan/ruodojo"
   position: "right"
+
+cdn_settings:
+  jsdelivr:
+    enable: true
+    uri: cdn.jsdelivr.net/gh/jamespan/ruodojo@master
