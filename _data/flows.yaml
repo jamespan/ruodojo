@@ -1,6 +1,10 @@
 pastime:
 
   -
+    title: 我是余欢水
+    img: 'https://tva1.sinaimg.cn/bmiddle/007S8ZIlly1gel1e2h2a6j30u019ue3w.jpg'
+    url: 'https://movie.douban.com/subject/33442331/'
+  -
     title: 重版出来
     img: 'https://tva1.sinaimg.cn/bmiddle/007S8ZIlly1gdprbl0bm1j30fq0m8n08.jpg'
     url: 'https://movie.douban.com/subject/26602304/'
