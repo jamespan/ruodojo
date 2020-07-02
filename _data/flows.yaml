@@ -1,6 +1,18 @@
 pastime:
 
   -
+    title: 黑水
+    img: 'https://tva1.sinaimg.cn/bmiddle/007S8ZIlly1ggcxnjwdklj30u018gtf9.jpg'
+    url: 'https://movie.douban.com/subject/30331959/'
+  -
+    title: 隐秘的角落
+    img: 'https://tva1.sinaimg.cn/bmiddle/007S8ZIlly1ggcy4ot6d5j30u018y7fk.jpg'
+    url: 'https://movie.douban.com/subject/33404425/'
+  -
+    title: 还是不能结婚的男人
+    img: 'https://tva1.sinaimg.cn/bmiddle/007S8ZIlly1ggcy2qgx7gj30fc0lsmyo.jpg'
+    url: 'https://movie.douban.com/subject/33425323/'
+  -
     title: 我是余欢水
     img: 'https://tva1.sinaimg.cn/bmiddle/007S8ZIlly1gel1e2h2a6j30u019ue3w.jpg'
     url: 'https://movie.douban.com/subject/33442331/'
