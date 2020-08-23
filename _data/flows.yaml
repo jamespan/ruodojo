@@ -1,13 +1,29 @@
 pastime:
 
   -
+    title: 像欧奈尔信徒一样交易
+    img: 'https://tva1.sinaimg.cn/bmiddle/007S8ZIlly1gi0xsbkgu2j308z0dwdgf.jpg'
+    url: 'https://book.douban.com/subject/10827554/'
+  -
+    title: 八佰
+    img: 'https://tva1.sinaimg.cn/bmiddle/007S8ZIlly1gi0xoqc0ikj30u0160tfv.jpg'
+    url: 'https://movie.douban.com/subject/26754233/'
+  -
+    title: 暗黑
+    img: 'https://tva1.sinaimg.cn/bmiddle/007S8ZIlly1gi0xmenssrj30u018fty9.jpg'
+    url: 'https://movie.douban.com/subject/26992330/'
+  -
+    title: 半泽直树2
+    img: 'https://tva1.sinaimg.cn/bmiddle/007S8ZIlly1gi0xl92izpj30gd0n0go3.jpg'
+    url: 'https://movie.douban.com/subject/25806638/'
+  -
     title: 远程遇害
     img: 'https://tva1.sinaimg.cn/bmiddle/007S8ZIlly1ghdxs9k7jbj30j20qudk9.jpg'
     url: 'https://movie.douban.com/subject/35130771/'
   -
     title: 主力的思維
     img: 'https://tva1.sinaimg.cn/bmiddle/007S8ZIlly1ghdxqh4b1tj30bd0g4dha.jpg'
-    url: 'https://www.books.com.tw/products/E050060436'
+    url: 'https://book.douban.com/subject/35171010/'
   -
     title: 性能之巅
     img: 'https://tva1.sinaimg.cn/bmiddle/007S8ZIlly1ghdxncmdjjj30u0123qi2.jpg'
