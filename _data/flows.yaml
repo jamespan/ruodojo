@@ -1,6 +1,18 @@
 pastime:
 
   -
+    title: 摩天大楼
+    img: 'hhttps://tva1.sinaimg.cn/bmiddle/007S8ZIlgy1gi904ufaxcj30u01esgyl.jpg'
+    url: 'https://movie.douban.com/subject/33393274/'
+  -
+    title: 股票买卖原则
+    img: 'https://tva1.sinaimg.cn/bmiddle/007S8ZIlgy1gi8ugjv57nj30aa0dw753.jpg'
+    url: 'https://book.douban.com/subject/5914491/'
+  -
+    title: 灰姑娘药剂师
+    img: 'https://tva1.sinaimg.cn/bmiddle/007S8ZIlly1gi8uk2c8pdj30u0161qax.jpg'
+    url: 'https://movie.douban.com/subject/34948447/'
+  -
     title: 像欧奈尔信徒一样交易
     img: 'https://tva1.sinaimg.cn/bmiddle/007S8ZIlly1gi0xsbkgu2j308z0dwdgf.jpg'
     url: 'https://book.douban.com/subject/10827554/'
