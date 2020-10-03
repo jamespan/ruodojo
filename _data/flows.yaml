@@ -1,6 +1,22 @@
 pastime:
 
   -
+    title: 你生气，为什么不明说？
+    img: 'https://tva1.sinaimg.cn/bmiddle/007S8ZIlly1gjci7e9ti9j306m098t9a.jpg'
+    url: 'https://book.douban.com/subject/35162413/'
+  -
+    title: 沉默的真相
+    img: 'https://tva1.sinaimg.cn/bmiddle/007S8ZIlly1gjci0fhi88j30u01901kx.jpg'
+    url: 'https://movie.douban.com/subject/33447642/'
+  -
+    title: 姜子牙
+    img: 'https://tva1.sinaimg.cn/bmiddle/007S8ZIlly1gjchyg5fm2j30u017o4ca.jpg'
+    url: 'https://movie.douban.com/subject/25907124/'
+  -
+    title: 花木兰
+    img: 'https://tva1.sinaimg.cn/bmiddle/007S8ZIlly1gjchwv8zsmj30u018pwt9.jpg'
+    url: 'https://movie.douban.com/subject/26357307/'
+  -
     title: 笑傲股市实践版
     img: 'https://tva1.sinaimg.cn/bmiddle/007S8ZIlly1gj36qwcof1j30ov0yr0wb.jpg'
     url: 'https://book.douban.com/subject/27029235/'
