@@ -1,6 +1,30 @@
 pastime:
 
   -
+    title: '后翼弃兵'
+    img: 'https://tva1.sinaimg.cn/bmiddle/0081Kckwly1gm0dusuyqnj30u018fwo3.jpg'
+    url: 'https://movie.douban.com/subject/32579283/'
+  -
+    title: '投行风云 第一季'
+    img: 'https://tva1.sinaimg.cn/bmiddle/0081Kckwly1gm0dxx2ivij30gc0oi77i.jpg'
+    url: 'https://movie.douban.com/subject/34434445/'
+  -
+    title: '#远程恋爱～普通的恋爱是邪道～'
+    img: 'https://tva1.sinaimg.cn/bmiddle/0081Kckwly1gm0dwcz3d3j30u010f79z.jpg'
+    url: 'https://movie.douban.com/subject/35182678/'
+  -
+    title: '股票大作手利弗莫尔谈如何操盘'
+    img: 'https://tva1.sinaimg.cn/bmiddle/0081Kckwly1gm0dtrcwaaj309g0dwgmj.jpg'
+    url: 'https://book.douban.com/subject/11606474/'
+  -
+    title: '超級績效2：投資冠軍的操盤思維'
+    img: 'https://tva1.sinaimg.cn/bmiddle/0081Kckwly1gm0djdxij8j304r06wjrm.jpg'
+    url: 'https://book.douban.com/subject/34954722/'
+  -
+    title: 股票魔法师
+    img: 'https://tva1.sinaimg.cn/bmiddle/0081Kckwly1gm0dg6k8f6j30m80tddkb.jpg'
+    url: 'https://book.douban.com/subject/26274190/'
+  -
     title: 两京十五日
     img: 'https://tva1.sinaimg.cn/bmiddle/0081Kckwly1gk1grqh7jfj30u016q79e.jpg'
     url: 'https://book.douban.com/subject/35080870/'
