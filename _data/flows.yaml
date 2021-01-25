@@ -1,6 +1,18 @@
 pastime:
 
   -
+    title: '有点心机又如何'
+    img: 'https://tva1.sinaimg.cn/bmiddle/008eGmZEly1gn0b62fuz1j30ci0go0uw.jpg'
+    url: 'https://movie.douban.com/subject/34937668/'
+  -
+    title: '交易冠军'
+    img: 'https://tva1.sinaimg.cn/bmiddle/008eGmZEly1gn0b4loiowj309s0dwaam.jpg'
+    url: 'https://book.douban.com/subject/3881796/'
+  -
+    title: '我如何在股市赚了200万'
+    img: 'https://tva1.sinaimg.cn/bmiddle/008eGmZEly1gn0b3f7eu1j309f0dwq3x.jpg'
+    url: 'https://book.douban.com/subject/1488504/'
+  -
     title: '超級績效3：動能大師圓桌論壇'
     img: 'https://tva1.sinaimg.cn/bmiddle/0081Kckwly1gmas053aiaj305207qaae.jpg'
     url: 'https://book.douban.com/subject/34954721/'
