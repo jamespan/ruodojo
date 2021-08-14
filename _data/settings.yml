@@ -168,5 +168,5 @@ ribbon_settings:
 
 cdn_settings:
   jsdelivr:
-    enable: true
+    enable: false
     uri: cdn.jsdelivr.net/gh/jamespan/ruodojo@master
