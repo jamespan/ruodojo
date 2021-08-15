@@ -1,6 +1,10 @@
 pastime:
 
   -
+    title: '龙樱'
+    img: 'https://tva1.sinaimg.cn/bmiddle/008i3skNly1gth8kl3clyj60b40gowfl02.jpg'
+    url: 'https://movie.douban.com/subject/34906700/'
+  -
     title: '扫黑除恶——为了国泰民安'
     img: 'https://tva1.sinaimg.cn/bmiddle/008i3skNly1gth8cztcqjj60p00e0ta902.jpg'
     url: 'https://movie.douban.com/subject/35415428/'
