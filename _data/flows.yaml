@@ -1,6 +1,10 @@
 pastime:
 
   -
+    title: '东城梦魇'
+    img: 'https://tva1.sinaimg.cn/bmiddle/008i3skNly1gth8m7i2w0j60u01907dv02.jpg'
+    url: 'https://movie.douban.com/subject/30441731/'
+  -
     title: '龙樱'
     img: 'https://tva1.sinaimg.cn/bmiddle/008i3skNly1gth8kl3clyj60b40gowfl02.jpg'
     url: 'https://movie.douban.com/subject/34906700/'
