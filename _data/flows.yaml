@@ -1,6 +1,18 @@
 pastime:
 
   -
+    title: '笑傲股市之成功故事'
+    img: 'https://tva1.sinaimg.cn/bmiddle/008i3skNly1gth7y2mqvyj60rs126diq02.jpg'
+    url: 'https://book.douban.com/subject/26287424/'
+  -
+    title: '笑傲牛熊'
+    img: 'https://tva1.sinaimg.cn/bmiddle/008i3skNly1gth7wnpbmrj60ch0ijwfk02.jpg'
+    url: 'https://book.douban.com/subject/26605747/'
+  -
+    title: '华尔街幽灵'
+    img: 'https://tva1.sinaimg.cn/bmiddle/008i3skNly1gth7usajvhj60b10dwmxq02.jpg'
+    url: 'https://book.douban.com/subject/3027457/'
+  -
     title: '有点心机又如何'
     img: 'https://tva1.sinaimg.cn/bmiddle/008eGmZEly1gn0b62fuz1j30ci0go0uw.jpg'
     url: 'https://movie.douban.com/subject/34937668/'
