@@ -1,6 +1,26 @@
 pastime:
 
   -
+    title: 'The Lifecycle Trade'
+    img: 'https://tva1.sinaimg.cn/bmiddle/008i3skNly1gth85gi4emj60990dvwez02.jpg'
+    url: 'https://www.amazon.com/Lifecycle-Trade-Trading-Growth-Stocks/dp/1733506608'
+  -
+    title: 'The MARA MINDSHIFT Guide'
+    img: 'https://tva1.sinaimg.cn/bmiddle/008i3skNly1gth83mfpztj60990dvaap02.jpg'
+    url: 'https://www.amazon.com/MARA-Mindshift-Guide-Trading-Workbook/dp/B08MN1NX6C'
+  -
+    title: '天黑请回家'
+    img: 'https://tva1.sinaimg.cn/bmiddle/008i3skNly1gth81f3fkhj60u0190wj602.jpg'
+    url: 'https://movie.douban.com/subject/30303227/'
+  -
+    title: '扫黑·决战'
+    img: 'https://tva1.sinaimg.cn/bmiddle/008i3skNly1gth80l9btjj60u017zq9a02.jpg'
+    url: 'https://movie.douban.com/subject/35164328/'
+  -
+    title: '投资存亡战'
+    img: 'https://tva1.sinaimg.cn/bmiddle/008i3skNly1gth7z90zkaj60960dwaag02.jpg'
+    url: 'https://book.douban.com/subject/3198691/'
+  -
     title: '笑傲股市之成功故事'
     img: 'https://tva1.sinaimg.cn/bmiddle/008i3skNly1gth7y2mqvyj60rs126diq02.jpg'
     url: 'https://book.douban.com/subject/26287424/'
