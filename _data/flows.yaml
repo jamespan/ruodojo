@@ -5,6 +5,10 @@ pastime:
     img: 'https://tva1.sinaimg.cn/bmiddle/008i3skNly1gth8cztcqjj60p00e0ta902.jpg'
     url: 'https://movie.douban.com/subject/35415428/'
   -
+    title: '御赐小仵作'
+    img: 'https://tva1.sinaimg.cn/bmiddle/008i3skNly1gth8hn5k72j60j60tejx402.jpg'
+    url: 'https://movie.douban.com/subject/32581207/'
+  -
     title: '百万日元的女人们'
     img: 'https://tva1.sinaimg.cn/bmiddle/008i3skNly1gth8aa3i6ej60hs0msacz02.jpg'
     url: 'https://movie.douban.com/subject/26986846/'
@@ -28,6 +32,10 @@ pastime:
     title: '投资存亡战'
     img: 'https://tva1.sinaimg.cn/bmiddle/008i3skNly1gth7z90zkaj60960dwaag02.jpg'
     url: 'https://book.douban.com/subject/3198691/'
+  -
+    title: '上载新生'
+    img: 'https://tva1.sinaimg.cn/bmiddle/008i3skNly1gth8gqev7rj60l00s0gq402.jpg'
+    url: 'https://movie.douban.com/subject/27622782/'
   -
     title: '笑傲股市之成功故事'
     img: 'https://tva1.sinaimg.cn/bmiddle/008i3skNly1gth7y2mqvyj60rs126diq02.jpg'
@@ -180,6 +188,10 @@ pastime:
     title: 隐秘的角落
     img: 'https://tva1.sinaimg.cn/bmiddle/007S8ZIlly1ggcy4ot6d5j30u018y7fk.jpg'
     url: 'https://movie.douban.com/subject/33404425/'
+  -
+    title: 我选择了不结婚
+    img: 'https://tva1.sinaimg.cn/bmiddle/008i3skNly1gth8jc81hhj60fk0m840b02.jpg'
+    url: 'https://movie.douban.com/subject/26683686/'
   -
     title: 还是不能结婚的男人
     img: 'https://tva1.sinaimg.cn/bmiddle/007S8ZIlly1ggcy2qgx7gj30fc0lsmyo.jpg'
