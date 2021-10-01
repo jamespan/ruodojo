@@ -6,9 +6,10 @@ featured_image: 'https://tva1.sinaimg.cn/bmiddle/008i3skNly1guzt0dxhjgj61hc0u0jy
 
 最近晚上睡觉前用手机看书，用的是多看阅读。虽然手机整体调节成了 Dark Mode，但是电子书的内容仍然是以白色为主体的，即使调节了亮度、白点亮度等参数，黑夜中的手机，在浏览 PDF 文档时仍发出不可忽视的亮光。
 
+<!-- more -->
+
 我尝试过使用海信的水墨屏阅读器，但出乎我的意料，海信阅读器哪怕是最低一档的背光，在黑夜中竟然比 iPhone 还要明亮，这也不像是一个好的解决方案。后来在爱人的启发下，我发现似乎可以利用我之前处理 PDF 文档的知识，将 PDF 文档处理为黑底白字的效果，如此一来，用 iPhone 浏览 PDF 文档在黑夜中的发光量想必能大幅降低，既能阅读，又不刺眼，还不影响枕边人睡觉。
 
-<!-- more -->
 
 ![](https://tva1.sinaimg.cn/large/008i3skNgy1guztq0hqhaj612n0rmdjx02.jpg)
 
