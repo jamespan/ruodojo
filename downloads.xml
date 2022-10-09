@@ -16,7 +16,6 @@ layout: none
 				<link>{{ site.url }}{{ post.url }}</link>
 				<guid isPermaLink="true">{{ item.url }}</guid>
 			</item>
-        <img src="{{ exhibition.img | replace: 'bmiddle', 'large' }}">
         {% endfor %}
 		
 	</channel>
