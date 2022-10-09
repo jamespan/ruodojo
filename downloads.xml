@@ -5,17 +5,17 @@ layout: none
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>Downloads Feed</title>
-		<description></description>		
-		<link>{{ site.url }}</link>
+		<description></description>
+		<link>{{ site.url | xml_escape }}</link>
 		<atom:link href="{{ site.url }}/downloads.xml" rel="self" type="application/rss+xml" />
         {% for item in site.data.downloads.items limit: 12 %}
         <item>
-				<title></title>
-				<description></description>
-				<pubDate>{{ item.date }}</pubDate>
-				<link>{{ site.url }}{{ post.url }}</link>
-				<guid isPermaLink="true">{{ item.url }}</guid>
-			</item>
+			<title></title>
+			<description></description>
+			<pubDate>{{ item.date | xml_escape}}</pubDate>
+			<link>{{ item.url | xml_escape }}</link>
+			<guid isPermaLink="true">{{ item.url | xml_escape }}</guid>
+		</item>
         {% endfor %}
 		
 	</channel>
