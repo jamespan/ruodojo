@@ -8,13 +8,12 @@ layout: none
 		<description></description>
 		<link>{{ site.url | xml_escape }}</link>
 		<atom:link href="{{ site.url }}/downloads.xml" rel="self" type="application/rss+xml" />
-        {% for item in site.data.downloads.items limit: 12 %}
+        {% for item in site.data.downloads.items %}
         <item>
 			<title>{% if item.target %}{{ item.target | xml_escape }}/{% endif %}{{ item.title | xml_escape }}</title>
-			<description></description>
 			<pubDate>{{ item.date | xml_escape }}</pubDate>
 			<link>{{ item.url | xml_escape }}</link>
-			<guid isPermaLink="true">{{ item.url | xml_escape }}</guid>
+			<guid isPermaLink="true">{{ item.url | md5 | xml_escape }}</guid>
 		</item>
         {% endfor %}
 		
