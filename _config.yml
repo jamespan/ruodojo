@@ -46,6 +46,7 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-feed
+  - liquid-md5
 
 paginate: 6
 paginate_path: "/blog/page:num/"
