@@ -49,4 +49,6 @@ plugins:
 
 paginate: 6
 paginate_path: "/blog/page:num/"
-  
+
+gems:
+  - liquid-md5
