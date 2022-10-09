@@ -48,10 +48,5 @@ plugins:
   - jekyll-feed
   - liquid-md5
 
-whitelist:
-  - liquid-md5
-
-gem:
-  - liquid-md5
 paginate: 6
 paginate_path: "/blog/page:num/"
