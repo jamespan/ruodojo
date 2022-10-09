@@ -13,7 +13,7 @@ layout: none
 			<title>{% if item.target %}{{ item.target | xml_escape }}/{% endif %}{{ item.title | xml_escape }}</title>
 			<pubDate>{{ item.date | xml_escape }}</pubDate>
 			<link>{{ item.url | xml_escape }}</link>
-			<guid>{{ item.title | md5 }}</guid>
+			<guid>{{ item.url | md5 }}</guid>
 		</item>
         {% endfor %}
 		
