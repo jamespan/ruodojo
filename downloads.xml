@@ -10,7 +10,7 @@ layout: none
 		<atom:link href="{{ site.url }}/downloads.xml" rel="self" type="application/rss+xml" />
         {% for item in site.data.downloads.items limit: 12 %}
         <item>
-			<title>{{ item.title | xml_escape }}</title>
+			<title>{{ item.target | xml_escape }}/{{ item.title | xml_escape }}</title>
 			<description></description>
 			<pubDate>{{ item.date | xml_escape }}</pubDate>
 			<link>{{ item.url | xml_escape }}</link>
