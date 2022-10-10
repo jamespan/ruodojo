@@ -13,7 +13,7 @@ layout: none
             <title><![CDATA[
             {% if item.target %}{{ item.target }}/{% endif %}{{ item.title }}
             ]]></title>
-            <pubDate>{{ item.date | xml_escape }}</pubDate>
+<!--             <pubDate>{{ item.date | xml_escape }}</pubDate> -->
             <link>{{ item.url | xml_escape }}</link>
             <guid>{{ item.url | xml_escape }}</guid>
         </item>
