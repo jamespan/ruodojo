@@ -3,19 +3,20 @@ layout: none
 ---
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-	<channel>
-		<title>Downloads Feed</title>
-		<description></description>
-		<link>{{ site.url | xml_escape }}</link>
-		<atom:link href="{{ site.url }}/downloads.xml" rel="self" type="application/rss+xml" />
+    <channel>
+        <title>Downloads Feed</title>
+        <description></description>
+        <link>{{ site.url | xml_escape }}</link>
+        <atom:link href="{{ site.url }}/downloads.xml" rel="self" type="application/rss+xml" />
         {% for item in site.data.downloads.items %}
         <item>
-			<title>{% if item.target %}{{ item.target | xml_escape }}/{% endif %}{{ item.title | xml_escape }}</title>
-			<pubDate>{{ item.date | xml_escape }}</pubDate>
-			<link>{{ item.url | xml_escape }}</link>
-			<guid>{{ item.url | md5 | xml_escape }}</guid>
-		</item>
+            <title><![CDATA[
+            {% if item.target %}{{ item.target }}/{% endif %}{{ item.title }}
+            ]]></title>
+            <pubDate>{{ item.date | xml_escape }}</pubDate>
+            <link>{{ item.url | xml_escape }}</link>
+            <guid>{{ item.url | xml_escape }}</guid>
+        </item>
         {% endfor %}
-		
-	</channel>
+    </channel>
 </rss>
