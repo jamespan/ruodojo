@@ -2,6 +2,7 @@
 DOMAIN-SUFFIX,cn,DIRECT
 
 DOMAIN-SUFFIX,google.com.hk,PROXY
+DOMAIN-SUFFIX,google.com,PROXY
 DOMAIN-SUFFIX,youtube.com,PROXY
 DOMAIN-SUFFIX,youtubei.googleapis.com,PROXY
 DOMAIN-SUFFIX,googlevideo.com,PROXY
