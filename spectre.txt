@@ -10,6 +10,8 @@ DOMAIN-SUFFIX,youtube.com,PROXY
 DOMAIN-SUFFIX,youtubei.googleapis.com,PROXY
 DOMAIN-SUFFIX,googlevideo.com,PROXY
 DOMAIN-SUFFIX,ytimg.com,PROXY
+DOMAIN-SUFFIX,twimg.com,PROXY
+
 DOMAIN-SUFFIX,bit.ly,PROXY
 
 DOMAIN-SUFFIX,instagram.com,PROXY
