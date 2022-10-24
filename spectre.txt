@@ -8,7 +8,6 @@ DOMAIN-SUFFIX,youtube.com,PROXY
 DOMAIN-SUFFIX,ytimg.com,PROXY
 DOMAIN-SUFFIX,googlevideo.com,PROXY
 
-
 DOMAIN-SUFFIX,feedly.com,PROXY
 
 DOMAIN-SUFFIX,jwpsrv.com,PROXY
