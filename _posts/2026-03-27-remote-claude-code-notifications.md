@@ -63,10 +63,13 @@ set -ga terminal-overrides ',*:allow-passthrough=on'
 
 ### 2. 创建 hook 脚本
 
-> **关键点**：
-> 1. hook 脚本在后台运行，直接 `printf` 输出不会显示在前台 pane。解决方案是新建一个临时 pane 发送通知，然后自动关闭。
-> 2. 使用 `-P` 选项避免 `split-window` 重置 window 名字。
-> 3. **重要**：使用 `-t "$WINDOW_ID"` 指定目标 window，否则会错误地重命名当前激活的 window。
+**关键点**：
+
+1. hook 脚本在后台运行，直接 `printf` 输出不会显示在前台 pane。解决方案是新建一个临时 pane 发送通知，然后自动关闭。
+2. 使用 `-P` 选项避免 `split-window` 重置 window 名字。
+3. **重要**：使用 `-t "$WINDOW_ID"` 指定目标 window，否则会错误地重命名当前激活的 window。
+4. 通知内容中的特殊字符（反引号、`$` 等）会被 shell 解释。解决方案是先写入临时文件，再在临时 pane 中 `cat` 该文件。
+5. 用 `awk substr` 按字符截断，而非 `head -c` 按字节截断，避免破坏 UTF-8 多字节字符。
 
 ```bash
 # ~/.claude/hooks/cmux-remote-notify.sh
@@ -80,9 +83,15 @@ WINDOW_NAME=$(tmux display-message -t "$TMUX_PANE" -p '#{window_name}')
 
 osc_notify() {
     local body="${1:-}"
-    body="${body:0:100}"
+    # 按字符截断，避免截断 UTF-8 多字节字符
+    body=$(echo "$body" | awk '{if(length($0)>100) print substr($0,1,100)"…"; else print}')
+    # 转义特殊字符，防止 shell 解释
+    body=$(echo "$body" | sed "s/'/'\\\\''/g")
+    # 写入临时文件，避免 shell 特殊字符问题
+    local tmp=$(mktemp)
+    printf '\033Ptmux;\033\033]777;notify;Claude @ tmux:%s;%s\007\033\\' "$LOCATION" "$body" > "$tmp"
     # -P 选项避免重置 window 名字
-    tmux split-window -v -l 1 -P "printf '\033Ptmux;\033\033]777;notify;Claude @ tmux:$LOCATION;$body\007\033\\\\'" 2>/dev/null
+    tmux split-window -v -l 1 -P "cat '$tmp'; rm -f '$tmp'" 2>/dev/null
 }
 
 add_bell_indicator() {
@@ -103,13 +112,20 @@ EVENT="$1"
 
 case "$EVENT" in
     stop|idle)
-        osc_notify "$SHORT_PATH ✓"
+        # 提取 Claude 最后回复的内容作为通知 body
+        if command -v jq &>/dev/null; then
+            LAST_MSG=$(echo "$INPUT" | jq -r '.last_assistant_message // empty' 2>/dev/null | awk '{if(length($0)>80) print substr($0,1,80)"…"; else print}' | head -1)
+        else
+            LAST_MSG=$(json_extract "$INPUT" "last_assistant_message")
+            LAST_MSG=$(echo "$LAST_MSG" | awk '{if(length($0)>80) print substr($0,1,80)"…"; else print}')
+        fi
+        osc_notify "${LAST_MSG:-$SHORT_PATH ✓}"
         sleep 0.2
         add_bell_indicator
         ;;
     notification|notify)
         if command -v jq &>/dev/null; then
-            BODY=$(echo "$INPUT" | jq -r '.body // "Needs input"' 2>/dev/null | head -c 100)
+            BODY=$(echo "$INPUT" | jq -r '.body // "Needs input"' 2>/dev/null | awk '{if(length($0)>100) print substr($0,1,100)"…"; else print}')
         else
             BODY=$(json_extract "$INPUT" "body")
             [ -z "$BODY" ] && BODY="Needs input"
@@ -185,6 +201,14 @@ chmod +x ~/.claude/hooks/cmux-remote-notify.sh
 2. **OSC 777 支持** - 大多数现代终端都支持（iTerm2、Ghostty、cmux、Kitty、Alacritty 等）
 
 如果你的终端不支持 OSC 777，可以考虑用 OSC 9（Windows Terminal）或 OSC 99（一些终端模拟器）。
+
+## cmux 注意事项
+
+**不要在远程 tmux 所在的 cmux workspace 里启动本地 Claude Code。**
+
+cmux 会检测当前 tab 是否有 `claude_code` 进程 PID，如果有，会**抑制所有 OSC 777 通知**（避免与 cmux 自带的 Claude hook 通知重复）。这会导致 hook 脚本发出的通知被静默丢弃。
+
+正确做法：在 cmux 中打开一个专门的 workspace 通过 SSH 连接远程服务器，在远程 tmux 里运行 Claude Code。不要在这个 workspace 的本地 tab 里启动 Claude Code。
 
 ## 与现有方案对比
 

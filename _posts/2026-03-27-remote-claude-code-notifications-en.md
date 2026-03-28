@@ -63,10 +63,13 @@ set -ga terminal-overrides ',*:allow-passthrough=on'
 
 ### 2. Create Hook Script
 
-> **Key insights**:
-> 1. Hook scripts run in the background, so direct `printf` output won't appear in the foreground pane. The solution is to create a temporary pane to send the notification, which then auto-closes.
-> 2. Use `-P` option to prevent `split-window` from resetting the window name.
-> 3. **Important**: Use `-t "$WINDOW_ID"` to specify the target window, otherwise it will incorrectly rename the currently active window.
+**Key points**:
+
+1. Hook scripts run in the background, so direct `printf` output won't appear in the foreground pane. The solution is to create a temporary pane to send the notification, which then auto-closes.
+2. Use `-P` option to prevent `split-window` from resetting the window name.
+3. **Important**: Use `-t "$WINDOW_ID"` to specify the target window, otherwise it will incorrectly rename the currently active window.
+4. Special characters in notification content (backticks, `$`, etc.) get interpreted by the shell. Solution: write the OSC sequence to a temp file first, then `cat` it in the temporary pane.
+5. Use `awk substr` to truncate by characters, not `head -c` which truncates by bytes and can break UTF-8 multi-byte characters.
 
 ```bash
 # ~/.claude/hooks/cmux-remote-notify.sh
@@ -80,9 +83,15 @@ WINDOW_NAME=$(tmux display-message -t "$TMUX_PANE" -p '#{window_name}')
 
 osc_notify() {
     local body="${1:-}"
-    body="${body:0:100}"
+    # Truncate by characters to avoid breaking UTF-8 multi-byte characters
+    body=$(echo "$body" | awk '{if(length($0)>100) print substr($0,1,100)"…"; else print}')
+    # Escape special characters to prevent shell interpretation
+    body=$(echo "$body" | sed "s/'/'\\\\''/g")
+    # Write to temp file to avoid shell special character issues
+    local tmp=$(mktemp)
+    printf '\033Ptmux;\033\033]777;notify;Claude @ tmux:%s;%s\007\033\\' "$LOCATION" "$body" > "$tmp"
     # -P option prevents resetting window name
-    tmux split-window -v -l 1 -P "printf '\033Ptmux;\033\033]777;notify;Claude @ tmux:$LOCATION;$body\007\033\\\\'" 2>/dev/null
+    tmux split-window -v -l 1 -P "cat '$tmp'; rm -f '$tmp'" 2>/dev/null
 }
 
 add_bell_indicator() {
@@ -103,13 +112,20 @@ EVENT="$1"
 
 case "$EVENT" in
     stop|idle)
-        osc_notify "$SHORT_PATH ✓"
+        # Extract Claude's last response as notification body
+        if command -v jq &>/dev/null; then
+            LAST_MSG=$(echo "$INPUT" | jq -r '.last_assistant_message // empty' 2>/dev/null | awk '{if(length($0)>80) print substr($0,1,80)"…"; else print}' | head -1)
+        else
+            LAST_MSG=$(json_extract "$INPUT" "last_assistant_message")
+            LAST_MSG=$(echo "$LAST_MSG" | awk '{if(length($0)>80) print substr($0,1,80)"…"; else print}')
+        fi
+        osc_notify "${LAST_MSG:-$SHORT_PATH ✓}"
         sleep 0.2
         add_bell_indicator
         ;;
     notification|notify)
         if command -v jq &>/dev/null; then
-            BODY=$(echo "$INPUT" | jq -r '.body // "Needs input"' 2>/dev/null | head -c 100)
+            BODY=$(echo "$INPUT" | jq -r '.body // "Needs input"' 2>/dev/null | awk '{if(length($0)>100) print substr($0,1,100)"…"; else print}')
         else
             BODY=$(json_extract "$INPUT" "body")
             [ -z "$BODY" ] && BODY="Needs input"
@@ -176,6 +192,14 @@ chmod +x ~/.claude/hooks/cmux-remote-notify.sh
 2. **Task complete** → Stop hook triggers → sends notification with ✓
 
 Notifications are passed back to your local terminal through the SSH connection, then triggered as system notifications by the terminal (e.g., iTerm2, Ghostty, cmux, etc.).
+
+## cmux Note
+
+**Do not start a local Claude Code session in the same cmux workspace where your remote tmux runs.**
+
+cmux detects whether a tab has a running `claude_code` process and will **suppress all OSC 777 notifications** from that tab to avoid duplicating cmux's built-in Claude hook notifications. This means your hook script's notifications will be silently dropped.
+
+The correct approach: create a dedicated cmux workspace for SSH connections to your remote server, run Claude Code inside the remote tmux. Don't launch local Claude Code in any tab of that workspace.
 
 ## Compatibility
 
