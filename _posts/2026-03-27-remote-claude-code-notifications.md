@@ -70,15 +70,19 @@ set -ga terminal-overrides ',*:allow-passthrough=on'
 
 **关键点**：
 
-1. hook 脚本在后台运行，直接 `printf` 输出不会显示在前台 pane。解决方案是新建一个临时 pane 发送通知，然后自动关闭。
+1. hook 脚本在后台运行，直接 `printf` 输出不会被 tmux 渲染到终端。必须创建临时 pane 来发送 OSC 序列——只有可见 pane 的输出才能通过 passthrough 到达本地终端。这个临时 pane 会一闪即逝，即使当前激活窗口已切走也能正常工作。
 2. 使用 `-P` 选项避免 `split-window` 重置 window 名字。
 3. **重要**：使用 `-t "$WINDOW_ID"` 指定目标 window，否则会错误地重命名当前激活的 window。
 4. 通知内容中的特殊字符（反引号、`$` 等）会被 shell 解释。解决方案是先写入临时文件，再在临时 pane 中 `cat` 该文件。
 5. 用 `awk substr` 按字符截断，而非 `head -c` 按字节截断，避免破坏 UTF-8 多字节字符。
+6. 脚本通过 JSON 输入中的 `hook_source` 字段检测 Agent 来源，自动适配 Claude 和 OpenCode 的消息提取方式。
 
 ```bash
 # ~/.claude/hooks/cmux-remote-notify.sh
 #!/bin/bash
+# Remote notification hook for Claude Code / OpenCode
+# Sends desktop notifications via OSC passthrough + tmux passthrough
+
 [ -n "$TMUX" ] || exit 0
 
 LOCATION=$(tmux display-message -t "$TMUX_PANE" -p '#{session_name}:#{window_index}')
@@ -88,22 +92,23 @@ WINDOW_NAME=$(tmux display-message -t "$TMUX_PANE" -p '#{window_name}')
 
 osc_notify() {
     local body="${1:-}"
-    # 按字符截断，避免截断 UTF-8 多字节字符
+    # Truncate by characters to avoid breaking UTF-8 multi-byte characters
     body=$(echo "$body" | awk '{if(length($0)>100) print substr($0,1,100)"…"; else print}')
-    # 转义特殊字符，防止 shell 解释
+    # Escape special characters to prevent shell interpretation
     body=$(echo "$body" | sed "s/'/'\\\\''/g")
-    # 写入临时文件，避免 shell 特殊字符问题
     local tmp=$(mktemp)
-    printf '\033Ptmux;\033\033]777;notify;Claude @ tmux:%s;%s\007\033\\' "$LOCATION" "$body" > "$tmp"
-    # -P 选项避免重置 window 名字
+    printf '\033Ptmux;\033\033]777;notify;%s @ tmux:%s;%s\007\033\\' "$AGENT_LABEL" "$LOCATION" "$body" > "$tmp"
+    # A temporary pane is required to emit OSC sequences: tmux only renders output from
+    # visible panes to the outer terminal. Background process output is silently dropped.
+    # This pane flashes briefly and works even if the active window has been switched away.
     tmux split-window -v -l 1 -P "cat '$tmp'; rm -f '$tmp'" 2>/dev/null
 }
 
 add_bell_indicator() {
-    if [[ ! "$WINDOW_NAME" =~ ^🔔[[:space:]] ]]; then
-        # 使用 -t 指定目标 window，避免重命名激活的 window
-        tmux rename-window -t "$WINDOW_ID" "🔔 $WINDOW_NAME"
-    fi
+    local active=$(tmux display-message -t "$WINDOW_ID" -p '#{window_active}')
+    [[ "$active" == "1" ]] && return
+    [[ "$WINDOW_NAME" =~ ^🔔[[:space:]] ]] && return
+    tmux rename-window -t "$WINDOW_ID" "🔔 $WINDOW_NAME"
 }
 
 json_extract() {
@@ -112,17 +117,44 @@ json_extract() {
         | sed 's/.*: *"\([^"]*\)".*/\1/' | head -1
 }
 
+truncate_line() {
+    awk '{if(length($0)>80) print substr($0,1,80)"…"; else print}' | head -1
+}
+
 INPUT=$(cat)
 EVENT="$1"
 
+# Detect agent source: OpenCode includes hook_source in its JSON, Claude does not
+if echo "$INPUT" | jq -e '.hook_source == "opencode-plugin"' &>/dev/null; then
+    AGENT_LABEL="OpenCode"
+else
+    AGENT_LABEL="Claude"
+fi
+
+claude_last_assistant_text() {
+    if command -v jq &>/dev/null; then
+        echo "$INPUT" | jq -r '.last_assistant_message // empty' 2>/dev/null | truncate_line
+    else
+        json_extract "$INPUT" "last_assistant_message" | truncate_line
+    fi
+}
+
+opencode_last_assistant_text() {
+    local session_id=$(echo "$INPUT" | jq -r '.session_id // empty' 2>/dev/null)
+    [[ -z "$session_id" ]] && return
+    command -v sqlite3 &>/dev/null || return
+    [[ "$session_id" =~ ^[a-zA-Z0-9_-]+$ ]] || return
+    local db="$HOME/.local/share/opencode/opencode.db"
+    [ -f "$db" ] || return
+    sqlite3 "$db" "SELECT json_extract(data, '$.text') FROM part WHERE message_id IN (SELECT id FROM message WHERE session_id = '$session_id' AND json_extract(data, '$.role') = 'assistant' ORDER BY time_created DESC LIMIT 1) AND json_extract(data, '$.type') = 'text' ORDER BY time_created DESC LIMIT 1" 2>/dev/null | truncate_line
+}
+
 case "$EVENT" in
     stop|idle)
-        # 提取 Claude 最后回复的内容作为通知 body
-        if command -v jq &>/dev/null; then
-            LAST_MSG=$(echo "$INPUT" | jq -r '.last_assistant_message // empty' 2>/dev/null | awk '{if(length($0)>80) print substr($0,1,80)"…"; else print}' | head -1)
+        if [[ "$AGENT_LABEL" == "OpenCode" ]]; then
+            LAST_MSG=$(opencode_last_assistant_text)
         else
-            LAST_MSG=$(json_extract "$INPUT" "last_assistant_message")
-            LAST_MSG=$(echo "$LAST_MSG" | awk '{if(length($0)>80) print substr($0,1,80)"…"; else print}')
+            LAST_MSG=$(claude_last_assistant_text)
         fi
         osc_notify "${LAST_MSG:-$SHORT_PATH ✓}"
         sleep 0.2
@@ -195,11 +227,12 @@ chmod +x ~/.claude/hooks/cmux-remote-notify.sh
 
 完整的通知链路：
 
-1. **Claude 完成任务或等待输入** → Claude Code 触发 `Stop` 或 `Notification` hook
-2. **Hook 脚本执行** → 创建临时 tmux pane，发送经过 tmux passthrough 包装的 OSC 777 通知，然后自动关闭
-3. **OSC 转义序列穿越** → 通过 tmux passthrough → 通过 SSH 连接 → 到达本地终端
-4. **本地终端显示通知** → iTerm2、Ghostty、cmux 等触发系统通知
-5. **cmux 切换到对应 tab** → tmux window 名字加上 `🔔` 前缀，提示你该切到哪个 window
+1. **Agent 完成任务或等待输入** → Claude Code 或 OpenCode 触发 `Stop` 或 `Notification` hook
+2. **Hook 脚本检测 Agent 来源** → 通过 JSON 输入中的 `hook_source` 字段判断调用方是 Claude 还是 OpenCode，自动调整通知标签
+3. **Hook 脚本执行** → 创建临时 tmux pane，发送经过 tmux passthrough 包装的 OSC 777 通知，然后自动关闭
+4. **OSC 转义序列穿越** → 通过 tmux passthrough → 通过 SSH 连接 → 到达本地终端
+5. **本地终端显示通知** → iTerm2、Ghostty、cmux 等触发系统通知
+6. **cmux 切换到对应 tab** → tmux window 名字加上 `🔔` 前缀，提示你该切到哪个 window
 
 ## 把 Agent 军团搬到远程服务器
 

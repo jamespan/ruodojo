@@ -70,15 +70,19 @@ set -ga terminal-overrides ',*:allow-passthrough=on'
 
 **Key points**:
 
-1. Hook scripts run in the background, so direct `printf` output won't appear in the foreground pane. The solution is to create a temporary pane to send the notification, which then auto-closes.
+1. Hook scripts run in the background, so direct `printf` output won't be rendered by tmux. A temporary pane is created to emit the OSC sequence — tmux only renders output from visible panes to the outer terminal. The pane flashes briefly and works even if the active window has been switched away.
 2. Use `-P` option to prevent `split-window` from resetting the window name.
 3. **Important**: Use `-t "$WINDOW_ID"` to specify the target window, otherwise it will incorrectly rename the currently active window.
 4. Special characters in notification content (backticks, `$`, etc.) get interpreted by the shell. Solution: write the OSC sequence to a temp file first, then `cat` it in the temporary pane.
 5. Use `awk substr` to truncate by characters, not `head -c` which truncates by bytes and can break UTF-8 multi-byte characters.
+6. The script detects the agent source via `hook_source` in the JSON input and adjusts the notification label and message extraction accordingly (Claude vs OpenCode).
 
 ```bash
 # ~/.claude/hooks/cmux-remote-notify.sh
 #!/bin/bash
+# Remote notification hook for Claude Code / OpenCode
+# Sends desktop notifications via OSC passthrough + tmux passthrough
+
 [ -n "$TMUX" ] || exit 0
 
 LOCATION=$(tmux display-message -t "$TMUX_PANE" -p '#{session_name}:#{window_index}')
@@ -94,16 +98,20 @@ osc_notify() {
     body=$(echo "$body" | sed "s/'/'\\\\''/g")
     # Write to temp file to avoid shell special character issues
     local tmp=$(mktemp)
-    printf '\033Ptmux;\033\033]777;notify;Claude @ tmux:%s;%s\007\033\\' "$LOCATION" "$body" > "$tmp"
-    # -P option prevents resetting window name
+    printf '\033Ptmux;\033\033]777;notify;%s @ tmux:%s;%s\007\033\\' "$AGENT_LABEL" "$LOCATION" "$body" > "$tmp"
+    # A temporary pane is required to emit OSC sequences: tmux only renders output from
+    # visible panes to the outer terminal. Background process output is silently dropped.
+    # This pane flashes briefly and works even if the active window has been switched away.
     tmux split-window -v -l 1 -P "cat '$tmp'; rm -f '$tmp'" 2>/dev/null
 }
 
 add_bell_indicator() {
-    if [[ ! "$WINDOW_NAME" =~ ^🔔[[:space:]] ]]; then
-        # Use -t to specify target window, avoid renaming active window
-        tmux rename-window -t "$WINDOW_ID" "🔔 $WINDOW_NAME"
-    fi
+    local active=$(tmux display-message -t "$WINDOW_ID" -p '#{window_active}')
+    # Skip if the window is already active (user is already looking at it)
+    [[ "$active" == "1" ]] && return
+    [[ "$WINDOW_NAME" =~ ^🔔[[:space:]] ]] && return
+    # Use -t to specify target window, avoid renaming active window
+    tmux rename-window -t "$WINDOW_ID" "🔔 $WINDOW_NAME"
 }
 
 json_extract() {
@@ -112,17 +120,44 @@ json_extract() {
         | sed 's/.*: *"\([^"]*\)".*/\1/' | head -1
 }
 
+truncate_line() {
+    awk '{if(length($0)>80) print substr($0,1,80)"…"; else print}' | head -1
+}
+
 INPUT=$(cat)
 EVENT="$1"
 
+# Detect agent source: OpenCode includes hook_source in its JSON, Claude does not
+if echo "$INPUT" | jq -e '.hook_source == "opencode-plugin"' &>/dev/null; then
+    AGENT_LABEL="OpenCode"
+else
+    AGENT_LABEL="Claude"
+fi
+
+claude_last_assistant_text() {
+    if command -v jq &>/dev/null; then
+        echo "$INPUT" | jq -r '.last_assistant_message // empty' 2>/dev/null | truncate_line
+    else
+        json_extract "$INPUT" "last_assistant_message" | truncate_line
+    fi
+}
+
+opencode_last_assistant_text() {
+    local session_id=$(echo "$INPUT" | jq -r '.session_id // empty' 2>/dev/null)
+    [[ -z "$session_id" ]] && return
+    command -v sqlite3 &>/dev/null || return
+    [[ "$session_id" =~ ^[a-zA-Z0-9_-]+$ ]] || return
+    local db="$HOME/.local/share/opencode/opencode.db"
+    [ -f "$db" ] || return
+    sqlite3 "$db" "SELECT json_extract(data, '$.text') FROM part WHERE message_id IN (SELECT id FROM message WHERE session_id = '$session_id' AND json_extract(data, '$.role') = 'assistant' ORDER BY time_created DESC LIMIT 1) AND json_extract(data, '$.type') = 'text' ORDER BY time_created DESC LIMIT 1" 2>/dev/null | truncate_line
+}
+
 case "$EVENT" in
     stop|idle)
-        # Extract Claude's last response as notification body
-        if command -v jq &>/dev/null; then
-            LAST_MSG=$(echo "$INPUT" | jq -r '.last_assistant_message // empty' 2>/dev/null | awk '{if(length($0)>80) print substr($0,1,80)"…"; else print}' | head -1)
+        if [[ "$AGENT_LABEL" == "OpenCode" ]]; then
+            LAST_MSG=$(opencode_last_assistant_text)
         else
-            LAST_MSG=$(json_extract "$INPUT" "last_assistant_message")
-            LAST_MSG=$(echo "$LAST_MSG" | awk '{if(length($0)>80) print substr($0,1,80)"…"; else print}')
+            LAST_MSG=$(claude_last_assistant_text)
         fi
         osc_notify "${LAST_MSG:-$SHORT_PATH ✓}"
         sleep 0.2
@@ -195,11 +230,12 @@ chmod +x ~/.claude/hooks/cmux-remote-notify.sh
 
 The full notification flow:
 
-1. **Claude finishes or needs input** → Claude Code triggers the `Stop` or `Notification` hook
-2. **Hook script fires** → creates a temporary tmux pane that emits an OSC 777 notification wrapped in tmux passthrough, then auto-closes
-3. **OSC escape sequence travels** → passes through tmux passthrough → through the SSH connection → reaches your local terminal
-4. **Local terminal displays notification** → iTerm2, Ghostty, cmux etc. trigger a system notification
-5. **cmux switches to the right tab** → `🔔` prefix added to the tmux window name so you know which window to go to
+1. **Agent finishes or needs input** → Claude Code or OpenCode triggers the `Stop` or `Notification` hook
+2. **Hook script detects agent source** → checks JSON input for `hook_source` field to determine if the caller is Claude or OpenCode, adjusts notification label accordingly
+3. **Hook script fires** → creates a temporary tmux pane that emits an OSC 777 notification wrapped in tmux passthrough, then auto-closes
+4. **OSC escape sequence travels** → passes through tmux passthrough → through the SSH connection → reaches your local terminal
+5. **Local terminal displays notification** → iTerm2, Ghostty, cmux etc. trigger a system notification
+6. **cmux switches to the right tab** → `🔔` prefix added to the tmux window name so you know which window to go to
 
 ## Bring the Agent Legion to Remote Servers
 
