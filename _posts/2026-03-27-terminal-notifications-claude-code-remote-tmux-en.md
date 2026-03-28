@@ -4,7 +4,7 @@ date: 2026-03-27
 description: 'Get desktop notifications when Claude Code finishes or needs input in remote tmux sessions — using only OSC 777 escape sequences and tmux passthrough, zero dependencies.'
 ---
 
-I've been using [cmux](https://cmux.com/docs/concepts) (a terminal multiplexer with built-in Claude Code integration) to run multiple Claude Code agents in parallel on my local machine — different projects, different tasks, all pushing forward at the same time. Notifications just work: an agent finishes, I get pinged, I switch over. The whole "agent legion" model hums along nicely.
+I run multiple Claude Code agents in parallel — different projects, different tasks, all pushing forward at the same time. On my local machine, notifications just work: an agent finishes, I get pinged, I switch over.
 
 Then I needed to work on a remote server. I SSH'd in, fired up tmux, started Claude Code — and the notifications stopped. Agent finishes, I don't know. Waiting for input, I don't know. I'm back to polling my terminal like it's 2005.
 
@@ -54,7 +54,11 @@ printf '\033Ptmux;\033\033]777;notify;Title;Body\007\033\\'
 
 One line. Zero dependencies. No Docker, no webhook, no n8n.
 
+![Notification demo — macOS notification popup and tmux window with 🔔 prefix](/images/posts/terminal-notifications-demo.gif)
+
 ## Complete Implementation
+
+Full source code at [github.com/jamespan/claude-tmux-notify](https://github.com/jamespan/claude-tmux-notify).
 
 ### 1. tmux Configuration
 
@@ -228,11 +232,19 @@ chmod +x ~/.claude/hooks/cmux-remote-notify.sh
 
 ## Claude Code and OpenCode Support
 
-This hook script works with both [Claude Code](https://docs.anthropic.com/en/docs/claude-code) and [OpenCode](https://github.com/opencode-ai/opencode). Claude Code natively supports hooks configured in `~/.claude/settings.json` — it just works. OpenCode has its own plugin system and doesn't natively read Claude's hook config. To bridge the gap, you need [oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent) (formerly [oh-my-opencode](https://github.com/code-yeongyu/oh-my-openagent)), a plugin that implements the Claude Code hook protocol on the OpenCode side, so your `~/.claude/settings.json` hooks execute unchanged.
-
-The script distinguishes the caller via the `hook_source` field in the JSON input: OpenCode (bridged through oh-my-openagent) includes `hook_source: "opencode-plugin"`, while Claude Code doesn't include this field at all. Once the source is detected, the script automatically adjusts the notification label and message extraction method.
+This hook also works with [OpenCode](https://github.com/opencode-ai/opencode) via the [oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent) bridge plugin, which implements the Claude Code hook protocol on the OpenCode side. The script auto-detects the caller via the `hook_source` field in the JSON input and adjusts the notification label and message extraction accordingly.
 
 ## How It Works
+
+```
+Agent finishes → Hook script → OSC 777 in tmux pane
+                                      ↓
+                              tmux passthrough
+                                      ↓
+                              SSH connection
+                                      ↓
+                          Local terminal → System notification
+```
 
 The full notification flow:
 
@@ -245,7 +257,7 @@ The full notification flow:
 
 ## Bring the Agent Legion to Remote Servers
 
-With this notification setup, my remote agents work exactly like my local cmux agents. Each agent runs in its own tmux window, I get pinged when it needs me, and I can run multiple agents in parallel without babysitting any of them.
+With this notification setup, my remote agents work exactly like my local [cmux](https://cmux.com/docs/concepts) agents. Each agent runs in its own tmux window, I get pinged when it needs me, and I can run multiple agents in parallel without babysitting any of them.
 
 My typical remote layout: one tmux session per project, multiple tmux sessions connected at once. Inside each session, different windows and panes manage different task groups — one window for the agent doing the main coding, another for the agent running tests, another for monitoring. When any agent across any session finishes, the notification tells me exactly which project and which window needs attention.
 
@@ -255,26 +267,6 @@ The `🔔` prefix on tmux window names is a workaround, by the way. Right now cm
 
 One gotcha: **don't run a local Claude Code session in the same cmux workspace.** cmux detects `claude_code` processes and suppresses OSC 777 notifications to avoid duplicating its built-in Claude hook. Your hook script's notifications would be silently dropped. Instead, create a dedicated cmux workspace for SSH connections to your remote server.
 
-## One-Click Setup: Feed This Article to Claude Code
-
-Want this setup on your own machine? The clean markdown version of this article is available here:
-
-**[terminal-notifications-claude-code-remote-tmux-en.md](/md/terminal-notifications-claude-code-remote-tmux-en.md)**
-
-Just feed that file to Claude Code and say:
-
-```
-Read the article at https://blog.jamespan.tech/md/terminal-notifications-claude-code-remote-tmux-en.md,
-then follow its steps to set up remote Claude Code notifications on my machine:
-- Create the hook scripts with the exact code from the article
-- Configure tmux passthrough
-- Configure Claude Code hooks
-```
-
-Claude Code will read the article, create the hook scripts, configure tmux, and set up the hooks — all automatically. Two minutes, zero manual work.
-
-If you're using [OpenCode](https://github.com/opencode-ai/opencode), the same hook scripts work too — just install the [oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent) (formerly [oh-my-opencode](https://github.com/code-yeongyu/oh-my-openagent)) plugin first. It bridges the Claude Code hook protocol so your `~/.claude/settings.json` hooks run unchanged inside OpenCode.
-
 ## Compatibility
 
 This solution depends on:
@@ -283,6 +275,13 @@ This solution depends on:
 2. **OSC 777 support** - most modern terminals support it (iTerm2, Ghostty, cmux, Kitty, Alacritty, etc.)
 
 If your terminal doesn't support OSC 777, consider using OSC 9 (Windows Terminal) or OSC 99 (some terminal emulators).
+
+## Troubleshooting
+
+- **No notification appears**: Check `tmux show -g allow-passthrough` — should be `on`. Restart tmux after changing config.
+- **Notification works locally but not over SSH**: Ensure your SSH client forwards escape sequences. Some SSH configs or jump hosts may strip them.
+- **Broken characters in notification**: The script uses `awk substr` for UTF-8 safe truncation. If still broken, check your locale settings (`echo $LANG`).
+- **Temporary pane flashes but no notification**: Your terminal may not support OSC 777. Try testing with `printf '\033]777;notify;Test;Hello\007'` directly in your local terminal.
 
 ## Comparison with Existing Solutions
 
@@ -300,3 +299,5 @@ If your terminal doesn't support OSC 777, consider using OSC 9 (Windows Terminal
 If you just want to receive notifications when remote Claude Code finishes tasks, you don't need to build a complex service stack. tmux passthrough + OSC 777 is enough, done in two minutes.
 
 Of course, if you need to click notifications to jump to specific locations, or push to multiple devices, the n8n solution might be more suitable. But for most scenarios, simple is beautiful.
+
+The complete source is at [github.com/jamespan/claude-tmux-notify](https://github.com/jamespan/claude-tmux-notify). The clean markdown version of this article is at [/md/terminal-notifications-claude-code-remote-tmux-en.md](/md/terminal-notifications-claude-code-remote-tmux-en.md) — feed it to Claude Code to automate the setup.

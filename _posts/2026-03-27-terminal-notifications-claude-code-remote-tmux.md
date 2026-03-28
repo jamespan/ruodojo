@@ -4,7 +4,7 @@ date: 2026-03-27
 description: '通过 OSC 777 转义序列和 tmux passthrough，让远程 tmux 中的 Claude Code 在完成任务或等待输入时发送桌面通知，零依赖。'
 ---
 
-我一直在用 [cmux](https://cmux.com/zh-CN/docs/concepts)（一个内置 Claude Code 集成的终端复用器）在本地并行跑多个 Claude Code Agent——不同的项目、不同的任务，同时推进。通知开箱即用：Agent 完成了，我收到通知，切过去看一眼。整个"Agent 军团"的模式跑得很顺。
+我在本地并行跑多个 Claude Code Agent——不同的项目、不同的任务，同时推进。通知开箱即用：Agent 完成了，我收到通知，切过去看一眼。
 
 后来工作需要在远程服务器上开发。我 SSH 上去，开了 tmux，启动 Claude Code——通知没了。Agent 完成了，我不知道。等待输入了，我不知道。又回到了盯着终端轮询的时代。
 
@@ -54,7 +54,11 @@ printf '\033Ptmux;\033\033]777;notify;Title;Body\007\033\\'
 
 一行。零依赖。不用 Docker，不用 webhook，不用 n8n。
 
+![通知效果演示——macOS 通知弹窗和带 🔔 前缀的 tmux 窗口](/images/posts/terminal-notifications-demo.gif)
+
 ## 完整实现
+
+完整代码在 [github.com/jamespan/claude-tmux-notify](https://github.com/jamespan/claude-tmux-notify)。
 
 ### 1. tmux 配置
 
@@ -225,11 +229,19 @@ chmod +x ~/.claude/hooks/cmux-remote-notify.sh
 
 ## 同时支持 Claude Code 和 OpenCode
 
-这套 hook 脚本同时支持 [Claude Code](https://docs.anthropic.com/en/docs/claude-code) 和 [OpenCode](https://github.com/opencode-ai/opencode)。Claude Code 原生支持 `~/.claude/settings.json` 中的 hooks 配置，开箱即用。OpenCode 本身有自己的插件体系，不直接读取 Claude 的 hook 配置——需要安装 [oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent)（原名 [oh-my-opencode](https://github.com/code-yeongyu/oh-my-openagent)）插件，它会在 OpenCode 端实现 Claude Code 的 hook 协议，让 `~/.claude/settings.json` 里配置的 hook 脚本原样执行。
-
-脚本通过 JSON 输入中的 `hook_source` 字段区分调用来源：OpenCode（经 oh-my-openagent 桥接）会在 JSON 中附带 `hook_source: "opencode-plugin"`，Claude Code 则不包含这个字段。检测到来源后，脚本自动适配通知标签和消息提取方式。
+这套 hook 也支持通过 [oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent) 桥接插件使用 [OpenCode](https://github.com/opencode-ai/opencode)——该插件在 OpenCode 端实现了 Claude Code 的 hook 协议。脚本通过 JSON 输入中的 `hook_source` 字段自动检测调用来源，并据此调整通知标签和消息提取方式。
 
 ## 工作原理
+
+```
+Agent finishes → Hook script → OSC 777 in tmux pane
+                                      ↓
+                              tmux passthrough
+                                      ↓
+                              SSH connection
+                                      ↓
+                          Local terminal → System notification
+```
 
 完整的通知链路：
 
@@ -242,7 +254,7 @@ chmod +x ~/.claude/hooks/cmux-remote-notify.sh
 
 ## 把 Agent 军团搬到远程服务器
 
-有了这套通知方案，远程 Agent 的体验和本地 cmux 一模一样。每个 Agent 在独立的 tmux window 里跑，需要我的时候通知我，我可以并行跑多个 Agent 而不用盯着任何一个。
+有了这套通知方案，远程 Agent 的体验和本地 [cmux](https://cmux.com/zh-CN/docs/concepts) 一模一样。每个 Agent 在独立的 tmux window 里跑，需要我的时候通知我，我可以并行跑多个 Agent 而不用盯着任何一个。
 
 我典型的远程布局：一个 tmux 会话对应一个项目，同时连接多个 tmux 会话。每个会话内部用不同的 window 和 pane 管理不同的任务组合——一个 window 放主力的编码 Agent，一个跑测试，一个做监控。无论哪个会话的哪个 Agent 完成，通知都会告诉我具体是哪个项目、哪个 window 需要关注。
 
@@ -252,26 +264,6 @@ chmod +x ~/.claude/hooks/cmux-remote-notify.sh
 
 有一个坑要注意：**不要在远程 tmux 所在的 cmux workspace 里启动本地 Claude Code。** cmux 会检测当前 tab 是否有 `claude_code` 进程，如果有，会抑制所有 OSC 777 通知（避免与自带的 Claude hook 通知重复）。这会导致你的 hook 脚本发出的通知被静默丢弃。正确做法：在 cmux 中建一个专门的 workspace 用来 SSH 到远程服务器。
 
-## 一键配置：把这篇文章喂给 Claude Code
-
-想要在自己的机器上配置同样的方案？本文的干净 Markdown 版本在这里：
-
-**[terminal-notifications-claude-code-remote-tmux.md](/md/terminal-notifications-claude-code-remote-tmux.md)**
-
-把这个文件喂给 Claude Code，然后说：
-
-```
-阅读这篇文章 https://blog.jamespan.tech/md/terminal-notifications-claude-code-remote-tmux.md，
-然后按照文章中的步骤配置远程 Claude Code 通知：
-- 创建文章中给出的 hook 脚本
-- 配置 tmux passthrough
-- 配置 Claude Code hooks
-```
-
-Claude Code 会读取文章，创建 hook 脚本，配置 tmux，设置 hooks——全自动。两分钟，零手动操作。
-
-如果你用 [OpenCode](https://github.com/opencode-ai/opencode)，同样的 hook 脚本也能工作，只需要先安装 [oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent)（原名 [oh-my-opencode](https://github.com/code-yeongyu/oh-my-openagent)）插件，它会桥接 Claude Code 的 hook 协议，让 `~/.claude/settings.json` 里配置的 hooks 在 OpenCode 中同样生效。
-
 ## 兼容性
 
 这个方案依赖：
@@ -280,6 +272,13 @@ Claude Code 会读取文章，创建 hook 脚本，配置 tmux，设置 hooks—
 2. **OSC 777 支持** - 大多数现代终端都支持（iTerm2、Ghostty、cmux、Kitty、Alacritty 等）
 
 如果你的终端不支持 OSC 777，可以考虑用 OSC 9（Windows Terminal）或 OSC 99（一些终端模拟器）。
+
+## 排查问题
+
+- **没有收到通知**：检查 `tmux show -g allow-passthrough`——应该是 `on`。修改配置后重启 tmux。
+- **本地有通知但 SSH 时无通知**：确认 SSH 客户端转发了转义序列，某些 SSH 配置或跳板机可能会过滤掉。
+- **通知中出现乱码**：脚本使用 `awk substr` 进行 UTF-8 安全截断。如果仍然乱码，检查 locale 设置（`echo $LANG`）。
+- **临时 pane 一闪而过但没有通知**：终端可能不支持 OSC 777。在本地终端直接测试：`printf '\033]777;notify;Test;Hello\007'`。
 
 ## 与现有方案对比
 
@@ -297,3 +296,5 @@ Claude Code 会读取文章，创建 hook 脚本，配置 tmux，设置 hooks—
 如果你只是想在远程 Claude Code 完成任务时收到通知，不需要搭建复杂的服务栈。tmux passthrough + OSC 777 就够了，两分钟搞定。
 
 当然，如果你需要点击通知跳转到具体位置，或者需要推送到多个设备，那 n8n 方案可能更适合。但对于大多数场景，简单就是美。
+
+完整代码在 [github.com/jamespan/claude-tmux-notify](https://github.com/jamespan/claude-tmux-notify)。本文的干净 Markdown 版本在 [/md/terminal-notifications-claude-code-remote-tmux.md](/md/terminal-notifications-claude-code-remote-tmux.md)——直接喂给 Claude Code 可自动完成配置。
