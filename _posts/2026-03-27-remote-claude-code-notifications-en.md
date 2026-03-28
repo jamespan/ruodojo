@@ -193,10 +193,13 @@ chmod +x ~/.claude/hooks/cmux-remote-notify.sh
 
 ## How It Works
 
-1. **Claude needs input** → Notification hook triggers → sends notification with message content
-2. **Task complete** → Stop hook triggers → sends notification with ✓
+The full notification flow:
 
-Notifications travel through the SSH connection back to your local terminal, which triggers them as system notifications (iTerm2, Ghostty, cmux, etc.).
+1. **Claude finishes or needs input** → Claude Code triggers the `Stop` or `Notification` hook
+2. **Hook script fires** → creates a temporary tmux pane that emits an OSC 777 notification wrapped in tmux passthrough, then auto-closes
+3. **OSC escape sequence travels** → passes through tmux passthrough → through the SSH connection → reaches your local terminal
+4. **Local terminal displays notification** → iTerm2, Ghostty, cmux etc. trigger a system notification
+5. **cmux switches to the right tab** → `🔔` prefix added to the tmux window name so you know which window to go to
 
 ## Bring the Agent Legion to Remote Servers
 

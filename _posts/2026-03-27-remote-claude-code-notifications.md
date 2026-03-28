@@ -193,10 +193,13 @@ chmod +x ~/.claude/hooks/cmux-remote-notify.sh
 
 ## 工作原理
 
-1. **Claude 需要输入** → Notification hook 触发 → 发送包含消息内容的通知
-2. **任务完成** → Stop hook 触发 → 发送带 ✓ 的通知
+完整的通知链路：
 
-通知通过 SSH 连接传回本地终端，再由终端（如 iTerm2、Ghostty、cmux 等）触发系统通知。
+1. **Claude 完成任务或等待输入** → Claude Code 触发 `Stop` 或 `Notification` hook
+2. **Hook 脚本执行** → 创建临时 tmux pane，发送经过 tmux passthrough 包装的 OSC 777 通知，然后自动关闭
+3. **OSC 转义序列穿越** → 通过 tmux passthrough → 通过 SSH 连接 → 到达本地终端
+4. **本地终端显示通知** → iTerm2、Ghostty、cmux 等触发系统通知
+5. **cmux 切换到对应 tab** → tmux window 名字加上 `🔔` 前缀，提示你该切到哪个 window
 
 ## 把 Agent 军团搬到远程服务器
 
