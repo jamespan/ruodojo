@@ -2,8 +2,7 @@
 
 ## Key Facts
 
-- **CSS**: Must edit `css/style.css` directly. Do NOT rely on `_sass/` changes — the static `style.css` takes precedence in the build.
-- **SCSS source**: `_sass/` exists but changes there may not reflect in production. Only edit for reference.
+- **CSS**: Edit `_sass/` SCSS files. Jekyll compiles `css/style.scss` → `css/style.css`. Do NOT create a static `css/style.css` — it will shadow the SCSS output.
 - **Build**: GitHub Pages with Jekyll. No custom GitHub Actions workflow.
 
 ## Project Structure
@@ -11,11 +10,20 @@
 - `_posts/` — Blog posts (Chinese: `YYYY-MM-DD-slug.md`, English: `YYYY-MM-DD-slug-en.md`)
 - `_layouts/` — HTML templates
 - `_data/settings.yml` — Site settings (colors, fonts, etc.)
-- `css/style.css` — Production CSS (edit this file directly)
-- `css/style.scss` — SCSS source (may not override style.css in build)
-- `_sass/` — SCSS partials
+- `css/style.scss` — Main SCSS entry point (imports `_sass/` partials)
+- `_sass/` — SCSS partials (`_basic.scss`, `_includes/_content.scss`, etc.)
 
-## Design Tokens (from compiled CSS)
+## SCSS Breakpoints
+
+- `phonel`: 480px
+- `tabletp`: 768px
+- `tabletl`: 1024px
+- `laptop`: 1220px
+- `desktop`: 1600px
+
+## Design Tokens
+
+Defined in `_data/settings.yml`, referenced as Liquid variables in `css/style.scss`:
 
 - `$text-dark-color`: `#2A2F36`
 - `$text-medium-color`: `#6C7A89`
