@@ -226,12 +226,18 @@ Window shows `🔔` prefix, which disappears when you switch to it.
 chmod +x ~/.claude/hooks/cmux-remote-notify.sh
 ```
 
+## Claude Code and OpenCode Support
+
+This hook script works with both [Claude Code](https://docs.anthropic.com/en/docs/claude-code) and [OpenCode](https://github.com/opencode-ai/opencode). Claude Code natively supports hooks configured in `~/.claude/settings.json` — it just works. OpenCode has its own plugin system and doesn't natively read Claude's hook config. To bridge the gap, you need [oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent) (formerly [oh-my-opencode](https://github.com/code-yeongyu/oh-my-openagent)), a plugin that implements the Claude Code hook protocol on the OpenCode side, so your `~/.claude/settings.json` hooks execute unchanged.
+
+The script distinguishes the caller via the `hook_source` field in the JSON input: OpenCode (bridged through oh-my-openagent) includes `hook_source: "opencode-plugin"`, while Claude Code doesn't include this field at all. Once the source is detected, the script automatically adjusts the notification label and message extraction method.
+
 ## How It Works
 
 The full notification flow:
 
-1. **Agent finishes or needs input** → Claude Code or OpenCode triggers the `Stop` or `Notification` hook
-2. **Hook script detects agent source** → checks JSON input for `hook_source` field to determine if the caller is Claude or OpenCode, adjusts notification label accordingly
+1. **Agent finishes or needs input** → Claude Code fires the hook natively, or OpenCode fires it through the oh-my-openagent bridge
+2. **Hook script detects agent source** → checks JSON input for `hook_source` field to determine if the caller is Claude or OpenCode, adjusts notification label and message extraction accordingly
 3. **Hook script fires** → creates a temporary tmux pane that emits an OSC 777 notification wrapped in tmux passthrough, then auto-closes
 4. **OSC escape sequence travels** → passes through tmux passthrough → through the SSH connection → reaches your local terminal
 5. **Local terminal displays notification** → iTerm2, Ghostty, cmux etc. trigger a system notification
@@ -266,6 +272,8 @@ then follow its steps to set up remote Claude Code notifications on my machine:
 ```
 
 Claude Code will read the article, create the hook scripts, configure tmux, and set up the hooks — all automatically. Two minutes, zero manual work.
+
+If you're using [OpenCode](https://github.com/opencode-ai/opencode), the same hook scripts work too — just install the [oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent) (formerly [oh-my-opencode](https://github.com/code-yeongyu/oh-my-openagent)) plugin first. It bridges the Claude Code hook protocol so your `~/.claude/settings.json` hooks run unchanged inside OpenCode.
 
 ## Compatibility
 

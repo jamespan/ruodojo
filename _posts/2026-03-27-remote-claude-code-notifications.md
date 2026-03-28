@@ -223,12 +223,18 @@ window 会显示 `🔔` 前缀，切换到该 window 后自动消失。
 chmod +x ~/.claude/hooks/cmux-remote-notify.sh
 ```
 
+## 同时支持 Claude Code 和 OpenCode
+
+这套 hook 脚本同时支持 [Claude Code](https://docs.anthropic.com/en/docs/claude-code) 和 [OpenCode](https://github.com/opencode-ai/opencode)。Claude Code 原生支持 `~/.claude/settings.json` 中的 hooks 配置，开箱即用。OpenCode 本身有自己的插件体系，不直接读取 Claude 的 hook 配置——需要安装 [oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent)（原名 [oh-my-opencode](https://github.com/code-yeongyu/oh-my-openagent)）插件，它会在 OpenCode 端实现 Claude Code 的 hook 协议，让 `~/.claude/settings.json` 里配置的 hook 脚本原样执行。
+
+脚本通过 JSON 输入中的 `hook_source` 字段区分调用来源：OpenCode（经 oh-my-openagent 桥接）会在 JSON 中附带 `hook_source: "opencode-plugin"`，Claude Code 则不包含这个字段。检测到来源后，脚本自动适配通知标签和消息提取方式。
+
 ## 工作原理
 
 完整的通知链路：
 
-1. **Agent 完成任务或等待输入** → Claude Code 或 OpenCode 触发 `Stop` 或 `Notification` hook
-2. **Hook 脚本检测 Agent 来源** → 通过 JSON 输入中的 `hook_source` 字段判断调用方是 Claude 还是 OpenCode，自动调整通知标签
+1. **Agent 完成任务或等待输入** → Claude Code 原生触发 hook，或 OpenCode 通过 oh-my-openagent 桥接触发 hook
+2. **Hook 脚本检测 Agent 来源** → 通过 JSON 输入中的 `hook_source` 字段判断调用方是 Claude 还是 OpenCode，自动调整通知标签和消息提取方式
 3. **Hook 脚本执行** → 创建临时 tmux pane，发送经过 tmux passthrough 包装的 OSC 777 通知，然后自动关闭
 4. **OSC 转义序列穿越** → 通过 tmux passthrough → 通过 SSH 连接 → 到达本地终端
 5. **本地终端显示通知** → iTerm2、Ghostty、cmux 等触发系统通知
@@ -263,6 +269,8 @@ chmod +x ~/.claude/hooks/cmux-remote-notify.sh
 ```
 
 Claude Code 会读取文章，创建 hook 脚本，配置 tmux，设置 hooks——全自动。两分钟，零手动操作。
+
+如果你用 [OpenCode](https://github.com/opencode-ai/opencode)，同样的 hook 脚本也能工作，只需要先安装 [oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent)（原名 [oh-my-opencode](https://github.com/code-yeongyu/oh-my-openagent)）插件，它会桥接 Claude Code 的 hook 协议，让 `~/.claude/settings.json` 里配置的 hooks 在 OpenCode 中同样生效。
 
 ## 兼容性
 
