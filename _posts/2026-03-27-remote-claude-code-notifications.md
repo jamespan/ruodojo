@@ -65,7 +65,8 @@ set -ga terminal-overrides ',*:allow-passthrough=on'
 
 > **关键点**：
 > 1. hook 脚本在后台运行，直接 `printf` 输出不会显示在前台 pane。解决方案是新建一个临时 pane 发送通知，然后自动关闭。
-> 2. 使用 `-P` 选项避免 `split-window` 重置 window 名字，然后在通知发送后添加 🔔 标识。
+> 2. 使用 `-P` 选项避免 `split-window` 重置 window 名字。
+> 3. **重要**：使用 `-t "$WINDOW_ID"` 指定目标 window，否则会错误地重命名当前激活的 window。
 
 ```bash
 # ~/.claude/hooks/cmux-remote-notify.sh
@@ -74,6 +75,7 @@ set -ga terminal-overrides ',*:allow-passthrough=on'
 
 LOCATION=$(tmux display-message -t "$TMUX_PANE" -p '#{session_name}:#{window_index}')
 SHORT_PATH=$(tmux display-message -t "$TMUX_PANE" -p '#{pane_current_path}' | sed 's/.*\/\(.*\/.*\)/\1/')
+WINDOW_ID=$(tmux display-message -t "$TMUX_PANE" -p '#{window_id}')
 WINDOW_NAME=$(tmux display-message -t "$TMUX_PANE" -p '#{window_name}')
 
 osc_notify() {
@@ -85,7 +87,8 @@ osc_notify() {
 
 add_bell_indicator() {
     if [[ ! "$WINDOW_NAME" =~ ^🔔[[:space:]] ]]; then
-        tmux rename-window "🔔 $WINDOW_NAME"
+        # 使用 -t 指定目标 window，避免重命名激活的 window
+        tmux rename-window -t "$WINDOW_ID" "🔔 $WINDOW_NAME"
     fi
 }
 

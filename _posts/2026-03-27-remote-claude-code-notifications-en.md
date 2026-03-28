@@ -65,7 +65,8 @@ set -ga terminal-overrides ',*:allow-passthrough=on'
 
 > **Key insights**:
 > 1. Hook scripts run in the background, so direct `printf` output won't appear in the foreground pane. The solution is to create a temporary pane to send the notification, which then auto-closes.
-> 2. Use `-P` option to prevent `split-window` from resetting the window name, then add 🔔 indicator after the notification is sent.
+> 2. Use `-P` option to prevent `split-window` from resetting the window name.
+> 3. **Important**: Use `-t "$WINDOW_ID"` to specify the target window, otherwise it will incorrectly rename the currently active window.
 
 ```bash
 # ~/.claude/hooks/cmux-remote-notify.sh
@@ -74,6 +75,7 @@ set -ga terminal-overrides ',*:allow-passthrough=on'
 
 LOCATION=$(tmux display-message -t "$TMUX_PANE" -p '#{session_name}:#{window_index}')
 SHORT_PATH=$(tmux display-message -t "$TMUX_PANE" -p '#{pane_current_path}' | sed 's/.*\/\(.*\/.*\)/\1/')
+WINDOW_ID=$(tmux display-message -t "$TMUX_PANE" -p '#{window_id}')
 WINDOW_NAME=$(tmux display-message -t "$TMUX_PANE" -p '#{window_name}')
 
 osc_notify() {
@@ -85,7 +87,8 @@ osc_notify() {
 
 add_bell_indicator() {
     if [[ ! "$WINDOW_NAME" =~ ^🔔[[:space:]] ]]; then
-        tmux rename-window "🔔 $WINDOW_NAME"
+        # Use -t to specify target window, avoid renaming active window
+        tmux rename-window -t "$WINDOW_ID" "🔔 $WINDOW_NAME"
     fi
 }
 
