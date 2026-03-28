@@ -1,6 +1,6 @@
 ---
 title: 关于
-featured_image: 'https://tva3.sinaimg.cn/large/006tNbRwly1fxaxjiumpwj318z0u0at2.jpg'
+featured_image: 'https://i0.wp.com/tva3.sinaimg.cn/large/006tNbRwly1fxaxjiumpwj318z0u0at2.jpg'
 ---
 
 小鶸一枚，曾经有个技术博客，但早已砍掉重练
@@ -15,5 +15,5 @@ featured_image: 'https://tva3.sinaimg.cn/large/006tNbRwly1fxaxjiumpwj318z0u0at2.
 ### 证书
 
 <div class="gallery" data-columns="1">
-    <img src="https://tva1.sinaimg.cn/large/006y8mN6gy1g6lkio14pij312u0u0jvm.jpg">
+    <img src="https://i0.wp.com/tva1.sinaimg.cn/large/006y8mN6gy1g6lkio14pij312u0u0jvm.jpg">
 </div>

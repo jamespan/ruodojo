@@ -1,6 +1,6 @@
 ---
 title: 销愁
-featured_image: 'https://tva3.sinaimg.cn/large/006tNbRwly1fxaxjiumpwj318z0u0at2.jpg'
+featured_image: 'https://i0.wp.com/tva3.sinaimg.cn/large/006tNbRwly1fxaxjiumpwj318z0u0at2.jpg'
 ---
 
 <style type="text/css">

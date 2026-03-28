@@ -1,7 +1,7 @@
 ---
 title: '使用 ffmpeg 进行视频合并和转码'
 date: 2020-02-07
-featured_image: 'https://tva1.sinaimg.cn/large/0082zybply1gbo8ahd6awj30w90i50tr.jpg'
+featured_image: 'https://i0.wp.com/tva1.sinaimg.cn/large/0082zybply1gbo8ahd6awj30w90i50tr.jpg'
 ---
 
 这些日子，我们因为 2019-nCov 都躲在家里不敢出门。有一次说起躲避灾难，夫人说我们是不是该一起看看 B站 上的一个求生视频。这部系列视频看起来不错，我决定把它抓下来保存。
@@ -10,7 +10,7 @@ featured_image: 'https://tva1.sinaimg.cn/large/0082zybply1gbo8ahd6awj30w90i50tr.
 
 视频用 Downie 抓下来之后是分片的。
 
-![](https://tva1.sinaimg.cn/large/0082zybply1gbo79k8g2yj324k09kgsq.jpg)
+![](https://i0.wp.com/tva1.sinaimg.cn/large/0082zybply1gbo79k8g2yj324k09kgsq.jpg)
 
 我记得之前用 Downie 下载 B站 动漫的时候不这样啊……我得像个办法把它们合并起来。
 
