@@ -1,0 +1,15 @@
+---
+layout: null
+permalink: /llms.txt
+---
+# {{ site.data.settings.basic_settings.site_title }}
+
+> {{ site.description }}
+
+{% for post in site.posts %}
+## {{ post.title }}
+
+{{ post.description | default: post.excerpt | strip_html | strip_newlines | truncate: 200 }}
+
+{{ post.url | absolute_url }}.md
+{% endfor %}

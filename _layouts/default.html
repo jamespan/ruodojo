@@ -54,6 +54,9 @@
 	<!-- Extra Header JS Code -->
 	{{ site.data.settings.advanced_settings.header_js }}
 	{% endif %}
+	{% if page.layout == 'post' %}
+	<link rel="alternate" type="text/markdown" href="{{ page.url | append: '.md' | absolute_url }}">
+	{% endif %}
 	<meta name="referrer" content="no-referrer" />
 	
 </head>
