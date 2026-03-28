@@ -31,7 +31,7 @@ jobs:
 
       - name: Generate clean markdown files
         run: |
-          mkdir -p _site/posts/md
+          mkdir -p _site/md
           for file in _posts/*.md; do
             filename=$(basename "$file")
             slug=$(echo "$filename" | sed -E 's/^[0-9]{4}-[0-9]{2}-[0-9]{2}-(.+)\.md$/\1/')
@@ -40,7 +40,7 @@ jobs:
               echo "# ${title}"
               echo ""
               awk '/^---$/{n++; next} n>=2' "$file"
-            } > "_site/posts/md/${slug}.md"
+            } > "_site/md/${slug}.md"
           done
 
       - name: Upload artifact

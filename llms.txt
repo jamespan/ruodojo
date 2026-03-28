@@ -11,5 +11,5 @@ permalink: /llms.txt
 
 {{ post.description | default: post.excerpt | strip_html | strip_newlines | truncate: 200 }}
 
-{{ '/posts/md/' | append: post.slug | append: '.md' | absolute_url }}
+{{ '/md/' | append: post.slug | append: '.md' | absolute_url }}
 {% endfor %}
