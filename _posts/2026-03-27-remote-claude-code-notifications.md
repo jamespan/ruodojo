@@ -1,9 +1,10 @@
 ---
-title: '远程 Claude Code 通知：零依赖的 OSC Passthrough 方案'
+title: '让远程 tmux 中的 Claude Code 通过终端发送通知'
 date: 2026-03-27
+description: '通过 OSC 777 转义序列和 tmux passthrough，让远程 tmux 中的 Claude Code 在完成任务或等待输入时发送桌面通知，零依赖。'
 ---
 
-我一直在用 [cmux](https://cmux.com/zh-CN/docs/concepts) 在本地并行跑多个 Claude Code Agent——不同的项目、不同的任务，同时推进。cmux 对 Claude Code 有原生集成，通知开箱即用：Agent 完成了，我收到通知，切过去看一眼。整个"Agent 军团"的模式跑得很顺。
+我一直在用 [cmux](https://cmux.com/zh-CN/docs/concepts)（一个内置 Claude Code 集成的终端复用器）在本地并行跑多个 Claude Code Agent——不同的项目、不同的任务，同时推进。通知开箱即用：Agent 完成了，我收到通知，切过去看一眼。整个"Agent 军团"的模式跑得很顺。
 
 后来工作需要在远程服务器上开发。我 SSH 上去，开了 tmux，启动 Claude Code——通知没了。Agent 完成了，我不知道。等待输入了，我不知道。又回到了盯着终端轮询的时代。
 
@@ -218,8 +219,11 @@ chmod +x ~/.claude/hooks/cmux-remote-notify.sh
 把这个文件喂给 Claude Code，然后说：
 
 ```
-按照这篇文章的步骤，帮我配置远程 Claude Code 通知。
-https://blog.jamespan.tech/md/remote-claude-code-notifications.md
+阅读这篇文章 https://blog.jamespan.tech/md/remote-claude-code-notifications.md，
+然后按照文章中的步骤配置远程 Claude Code 通知：
+- 创建文章中给出的 hook 脚本
+- 配置 tmux passthrough
+- 配置 Claude Code hooks
 ```
 
 Claude Code 会读取文章，创建 hook 脚本，配置 tmux，设置 hooks——全自动。两分钟，零手动操作。
