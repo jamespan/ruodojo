@@ -3,7 +3,8 @@
 ## Key Facts
 
 - **CSS**: Edit `_sass/` SCSS files. Jekyll compiles `css/style.scss` → `css/style.css`. Do NOT create a static `css/style.css` — it will shadow the SCSS output.
-- **Build**: GitHub Pages with Jekyll. No custom GitHub Actions workflow.
+- **Build**: GitHub Pages with Jekyll + custom GitHub Actions workflow (`.github/workflows/deploy.yml`).
+- **Clean Markdown**: The workflow generates clean `.md` files (no frontmatter, `# Title` header) at `/md/<slug>.md`. Slug is extracted from `_posts/` filename: `YYYY-MM-DD-<slug>.md` → `/md/<slug>.md`.
 
 ## Project Structure
 

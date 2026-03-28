@@ -3,37 +3,41 @@ title: '远程 Claude Code 通知：零依赖的 OSC Passthrough 方案'
 date: 2026-03-27
 ---
 
-如果你在远程服务器的 tmux 里运行 Claude Code，可能会遇到一个问题：任务完成了，但你不知道。Claude Code 的通知机制默认只能在本地工作，远程环境下你需要另想办法。
+我一直在用 [cmux](https://cmux.com/zh-CN/docs/concepts) 在本地并行跑多个 Claude Code Agent——不同的项目、不同的任务，同时推进。cmux 对 Claude Code 有原生集成，通知开箱即用：Agent 完成了，我收到通知，切过去看一眼。整个"Agent 军团"的模式跑得很顺。
+
+后来工作需要在远程服务器上开发。我 SSH 上去，开了 tmux，启动 Claude Code——通知没了。Agent 完成了，我不知道。等待输入了，我不知道。又回到了盯着终端轮询的时代。
 
 <!-- more -->
 
-## 现有方案的问题
+## 现有方案：能用，但太重了
 
-搜索了一下，发现已经有几篇文章讨论这个问题：
+跟这个问题纠缠了一阵之后，我找到了几篇讨论这个问题的文章：
 
 - [Claude Code + Tmux: How I got notifications working](https://software-dc.com/blog/4-claude-code-tmux-how-i-got-notifications-working)
 - [Notification System for Tmux and Claude Code](https://quemy.info/2025-08-04-notification-system-tmux-claude.html)
 
-这些方案的思路是：Claude Code 发送 HTTP 请求 → n8n 工作流处理 → Gotify 推送通知 → 本地 webhook 接收 → 系统通知。
+他们的思路是：Claude Code 发送 HTTP 请求 → n8n 工作流处理 → Gotify 推送通知 → 本地 webhook 接收 → 系统通知。
 
-听起来很完整，但问题是：**太重了！** 你需要：
+能用。但**发个通知而已，这阵容也太豪华了**：
 
 - n8n 工作流引擎
 - Gotify 通知服务器
 - 本地 webhook 服务
 - Docker 容器
 
-整套下来至少 30 分钟，还得维护这些服务。
+整套下来至少 30 分钟，还得持续维护。我只是想知道 Agent 干完了没啊。
 
-## 更简单的方案：OSC Passthrough
+## OSC 777：藏在你终端里的通知协议
 
-其实，终端本身就支持通知机制。OSC（Operating System Command）是终端转义序列的一种，其中 OSC 777 就是专门用于通知的。
+有意思的是，你的终端早就支持通知了，好多年了。OSC（Operating System Command）是终端转义序列标准，其中 OSC 777 就是专门用来发通知的。你的终端——iTerm2、Ghostty、Kitty，随便哪个——早就知道怎么显示它们。
 
-问题在于，tmux 会拦截这些转义序列。解决方案是使用 tmux 的 passthrough 功能，把 OSC 序列包装起来：
+唯一不工作是因为 tmux。它拦截了转义序列。但 tmux 也留了后门：**passthrough 模式**。
 
 ```
 ESC Ptmux ; ESC <OSC sequence> ESC \
 ```
+
+把 OSC 777 通知用 passthrough 包装一下，tmux 就会乖乖放行。
 
 ### OSC 777 通知格式
 
@@ -41,19 +45,19 @@ ESC Ptmux ; ESC <OSC sequence> ESC \
 ESC ] 777 ; notify ; <title> ; <body> BEL
 ```
 
-### 完整的 bash 实现
+### 一行代码搞定通知：
 
 ```bash
 printf '\033Ptmux;\033\033]777;notify;Title;Body\007\033\\'
 ```
 
-一行命令，零依赖。
+一行。零依赖。不用 Docker，不用 webhook，不用 n8n。
 
 ## 完整实现
 
 ### 1. tmux 配置
 
-首先确保 tmux 允许 passthrough：
+首先告诉 tmux 允许 passthrough：
 
 ```bash
 # ~/.tmux.conf
@@ -193,6 +197,30 @@ chmod +x ~/.claude/hooks/cmux-remote-notify.sh
 
 通知通过 SSH 连接传回本地终端，再由终端（如 iTerm2、Ghostty、cmux 等）触发系统通知。
 
+## 把 Agent 军团搬到远程服务器
+
+有了这套通知方案，远程 Agent 的体验和本地 cmux 一模一样。每个 Agent 在独立的 tmux window 里跑，需要我的时候通知我，我可以并行跑多个 Agent 而不用盯着任何一个。
+
+我典型的远程布局：一个 tmux 会话对应一个项目，同时连接多个 tmux 会话。每个会话内部用不同的 window 和 pane 管理不同的任务组合——一个 window 放主力的编码 Agent，一个跑测试，一个做监控。无论哪个会话的哪个 Agent 完成，通知都会告诉我具体是哪个项目、哪个 window 需要关注。
+
+**通知是 Agent 军团的神经系统。** 没有通知，你得手动轮询每个窗口；有了通知，你可以按需切换上下文，其他时间专注做别的事。
+
+顺便说一下，tmux window 名字前面的 `🔔` 是个权宜之计。目前 cmux 收到通知后能自动切换到对应的 cmux tab，但没法进一步深入 tmux 内部跳转到具体的 window。所以用铃铛来提示你需要手动切到哪个 window。如果后续 cmux 加一个点击通知跳转到 tab 之后执行自定义操作的 hook（比如自动执行 `tmux select-window -t bell`），就能直接跳转到等待输入的 Claude Code 所在的 tmux window 了。期待那一天。
+
+有一个坑要注意：**不要在远程 tmux 所在的 cmux workspace 里启动本地 Claude Code。** cmux 会检测当前 tab 是否有 `claude_code` 进程，如果有，会抑制所有 OSC 777 通知（避免与自带的 Claude hook 通知重复）。这会导致你的 hook 脚本发出的通知被静默丢弃。正确做法：在 cmux 中建一个专门的 workspace 用来 SSH 到远程服务器。
+
+## 一键配置：把这篇文章喂给 Claude Code
+
+想要在自己的机器上配置同样的方案？本文的干净 Markdown 版本在这里：
+
+**[remote-claude-code-notifications.md](/md/remote-claude-code-notifications.md)**
+
+把这个文件喂给 Claude Code，然后说：
+
+> 按照这篇文章的步骤，帮我配置远程 Claude Code 通知。
+
+Claude Code 会读取文章，创建 hook 脚本，配置 tmux，设置 hooks——全自动。两分钟，零手动操作。
+
 ## 兼容性
 
 这个方案依赖：
@@ -201,14 +229,6 @@ chmod +x ~/.claude/hooks/cmux-remote-notify.sh
 2. **OSC 777 支持** - 大多数现代终端都支持（iTerm2、Ghostty、cmux、Kitty、Alacritty 等）
 
 如果你的终端不支持 OSC 777，可以考虑用 OSC 9（Windows Terminal）或 OSC 99（一些终端模拟器）。
-
-## cmux 注意事项
-
-**不要在远程 tmux 所在的 cmux workspace 里启动本地 Claude Code。**
-
-cmux 会检测当前 tab 是否有 `claude_code` 进程 PID，如果有，会**抑制所有 OSC 777 通知**（避免与 cmux 自带的 Claude hook 通知重复）。这会导致 hook 脚本发出的通知被静默丢弃。
-
-正确做法：在 cmux 中打开一个专门的 workspace 通过 SSH 连接远程服务器，在远程 tmux 里运行 Claude Code。不要在这个 workspace 的本地 tab 里启动 Claude Code。
 
 ## 与现有方案对比
 

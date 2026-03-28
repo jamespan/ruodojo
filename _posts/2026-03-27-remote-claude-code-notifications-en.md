@@ -3,37 +3,41 @@ title: 'Remote Claude Code Notifications: Zero-Dependency OSC Passthrough Soluti
 date: 2026-03-27
 ---
 
-If you run Claude Code inside tmux on a remote server, you might encounter a problem: the task finishes, but you don't know about it. Claude Code's notification mechanism only works locally by default, so in remote environments you need to find another way.
+I've been using [cmux](https://cmux.com/docs/concepts) to run multiple Claude Code agents in parallel on my local machine — different projects, different tasks, all pushing forward at the same time. cmux has first-class Claude Code integration, so notifications just work: an agent finishes, I get pinged, I switch over. The whole "agent legion" model hums along nicely.
+
+Then I needed to work on a remote server. I SSH'd in, fired up tmux, started Claude Code — and the notifications stopped. Agent finishes, I don't know. Waiting for input, I don't know. I'm back to polling my terminal like it's 2005.
 
 <!-- more -->
 
-## Problems with Existing Solutions
+## The Existing Solutions: Powerful but Over-Engineered
 
-After some searching, I found a few articles discussing this issue:
+After living with this problem for a while, I found a few articles with solutions:
 
 - [Claude Code + Tmux: How I got notifications working](https://software-dc.com/blog/4-claude-code-tmux-how-i-got-notifications-working)
 - [Notification System for Tmux and Claude Code](https://quemy.info/2025-08-04-notification-system-tmux-claude.html)
 
-The approach in these solutions is: Claude Code sends HTTP request → n8n workflow processes it → Gotify pushes notification → local webhook receives it → system notification.
+Their approach: Claude Code sends HTTP request → n8n workflow processes it → Gotify pushes notification → local webhook receives it → system notification.
 
-Sounds complete, but the problem is: **it's too heavy!** You need:
+It works. But **it's a lot of machinery for a notification**:
 
 - n8n workflow engine
 - Gotify notification server
 - Local webhook service
 - Docker containers
 
-The whole setup takes at least 30 minutes, plus ongoing maintenance of these services.
+30+ minutes to set up, plus ongoing maintenance. I just want to know when my agent is done.
 
-## A Simpler Solution: OSC Passthrough
+## OSC 777: The Notification Protocol Hiding in Your Terminal
 
-Actually, terminals themselves support notification mechanisms. OSC (Operating System Command) is a type of terminal escape sequence, and OSC 777 is specifically designed for notifications.
+Here's the thing: your terminal already supports notifications. It has for years. OSC (Operating System Command) is a terminal escape sequence standard, and OSC 777 is specifically designed for notifications. Your terminal — iTerm2, Ghostty, Kitty, whatever — already knows how to display them.
 
-The problem is that tmux intercepts these escape sequences. The solution is to use tmux's passthrough feature to wrap the OSC sequences:
+The only reason it doesn't work through tmux is... tmux. It intercepts escape sequences. But tmux also has a built-in escape hatch: **passthrough mode**.
 
 ```
 ESC Ptmux ; ESC <OSC sequence> ESC \
 ```
+
+Wrap your OSC 777 notification in passthrough, and tmux will politely let it through.
 
 ### OSC 777 Notification Format
 
@@ -41,19 +45,19 @@ ESC Ptmux ; ESC <OSC sequence> ESC \
 ESC ] 777 ; notify ; <title> ; <body> BEL
 ```
 
-### Complete bash Implementation
+### The entire notification in one line:
 
 ```bash
 printf '\033Ptmux;\033\033]777;notify;Title;Body\007\033\\'
 ```
 
-One line, zero dependencies.
+One line. Zero dependencies. No Docker, no webhook, no n8n.
 
 ## Complete Implementation
 
 ### 1. tmux Configuration
 
-First, ensure tmux allows passthrough:
+First, tell tmux to allow passthrough:
 
 ```bash
 # ~/.tmux.conf
@@ -191,15 +195,31 @@ chmod +x ~/.claude/hooks/cmux-remote-notify.sh
 1. **Claude needs input** → Notification hook triggers → sends notification with message content
 2. **Task complete** → Stop hook triggers → sends notification with ✓
 
-Notifications are passed back to your local terminal through the SSH connection, then triggered as system notifications by the terminal (e.g., iTerm2, Ghostty, cmux, etc.).
+Notifications travel through the SSH connection back to your local terminal, which triggers them as system notifications (iTerm2, Ghostty, cmux, etc.).
 
-## cmux Note
+## Bring the Agent Legion to Remote Servers
 
-**Do not start a local Claude Code session in the same cmux workspace where your remote tmux runs.**
+With this notification setup, my remote agents work exactly like my local cmux agents. Each agent runs in its own tmux window, I get pinged when it needs me, and I can run multiple agents in parallel without babysitting any of them.
 
-cmux detects whether a tab has a running `claude_code` process and will **suppress all OSC 777 notifications** from that tab to avoid duplicating cmux's built-in Claude hook notifications. This means your hook script's notifications will be silently dropped.
+My typical remote layout: one tmux session per project, multiple tmux sessions connected at once. Inside each session, different windows and panes manage different task groups — one window for the agent doing the main coding, another for the agent running tests, another for monitoring. When any agent across any session finishes, the notification tells me exactly which project and which window needs attention.
 
-The correct approach: create a dedicated cmux workspace for SSH connections to your remote server, run Claude Code inside the remote tmux. Don't launch local Claude Code in any tab of that workspace.
+**Notifications are the nervous system of the agent legion.** Without them, you're manually polling windows. With them, you context-switch on demand and stay focused on whatever else you're doing.
+
+The `🔔` prefix on tmux window names is a workaround, by the way. Right now cmux can auto-switch to the right tab when a notification comes in, but it can't reach *into* tmux to switch to a specific window. So the bell tells you which window to go to manually. This is a temporary compromise — if cmux adds a hook that fires when you click a notification and land on the tab (so you can run a custom command like `tmux select-window -t bell`), we'd be able to jump directly to the tmux window where Claude Code is waiting for input. Fingers crossed.
+
+One gotcha: **don't run a local Claude Code session in the same cmux workspace.** cmux detects `claude_code` processes and suppresses OSC 777 notifications to avoid duplicating its built-in Claude hook. Your hook script's notifications would be silently dropped. Instead, create a dedicated cmux workspace for SSH connections to your remote server.
+
+## One-Click Setup: Feed This Article to Claude Code
+
+Want this setup on your own machine? The clean markdown version of this article is available here:
+
+**[remote-claude-code-notifications-en.md](/md/remote-claude-code-notifications-en.md)**
+
+Just feed that file to Claude Code and say:
+
+> Follow the steps in this article to set up remote Claude Code notifications on my machine.
+
+Claude Code will read the article, create the hook scripts, configure tmux, and set up the hooks — all automatically. Two minutes, zero manual work.
 
 ## Compatibility
 
