@@ -256,12 +256,12 @@ chmod +x ~/.claude/hooks/cmux-remote-notify.sh
 
 想要在自己的机器上配置同样的方案？本文的干净 Markdown 版本在这里：
 
-**[remote-claude-code-notifications.md](/md/remote-claude-code-notifications.md)**
+**[terminal-notifications-claude-code-remote-tmux.md](/md/terminal-notifications-claude-code-remote-tmux.md)**
 
 把这个文件喂给 Claude Code，然后说：
 
 ```
-阅读这篇文章 https://blog.jamespan.tech/md/remote-claude-code-notifications.md，
+阅读这篇文章 https://blog.jamespan.tech/md/terminal-notifications-claude-code-remote-tmux.md，
 然后按照文章中的步骤配置远程 Claude Code 通知：
 - 创建文章中给出的 hook 脚本
 - 配置 tmux passthrough

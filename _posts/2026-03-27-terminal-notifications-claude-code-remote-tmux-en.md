@@ -259,12 +259,12 @@ One gotcha: **don't run a local Claude Code session in the same cmux workspace.*
 
 Want this setup on your own machine? The clean markdown version of this article is available here:
 
-**[remote-claude-code-notifications-en.md](/md/remote-claude-code-notifications-en.md)**
+**[terminal-notifications-claude-code-remote-tmux-en.md](/md/terminal-notifications-claude-code-remote-tmux-en.md)**
 
 Just feed that file to Claude Code and say:
 
 ```
-Read the article at https://blog.jamespan.tech/md/remote-claude-code-notifications-en.md,
+Read the article at https://blog.jamespan.tech/md/terminal-notifications-claude-code-remote-tmux-en.md,
 then follow its steps to set up remote Claude Code notifications on my machine:
 - Create the hook scripts with the exact code from the article
 - Configure tmux passthrough
