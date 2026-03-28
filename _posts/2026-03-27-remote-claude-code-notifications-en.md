@@ -63,26 +63,32 @@ set -ga terminal-overrides ',*:allow-passthrough=on'
 
 ### 2. Create Hook Script
 
-> **Key insight**: Hook scripts run in the background, so direct `printf` output won't appear in the foreground pane. The solution is to create a temporary pane to send the notification, which then auto-closes.
+> **Key insights**:
+> 1. Hook scripts run in the background, so direct `printf` output won't appear in the foreground pane. The solution is to create a temporary pane to send the notification, which then auto-closes.
+> 2. Use `-P` option to prevent `split-window` from resetting the window name, then add 🔔 indicator after the notification is sent.
 
 ```bash
 # ~/.claude/hooks/cmux-remote-notify.sh
 #!/bin/bash
-# Only run in tmux
 [ -n "$TMUX" ] || exit 0
 
-# Get context info
 LOCATION=$(tmux display-message -t "$TMUX_PANE" -p '#{session_name}:#{window_index}')
 SHORT_PATH=$(tmux display-message -t "$TMUX_PANE" -p '#{pane_current_path}' | sed 's/.*\/\(.*\/.*\)/\1/')
+WINDOW_NAME=$(tmux display-message -t "$TMUX_PANE" -p '#{window_name}')
 
 osc_notify() {
     local body="${1:-}"
     body="${body:0:100}"
-    # Create temp pane to send notification, auto-closes when done
-    tmux split-window -v -l 1 "printf '\033Ptmux;\033\033]777;notify;Claude @ tmux:$LOCATION;$body\007\033\\\\'" 2>/dev/null
+    # -P option prevents resetting window name
+    tmux split-window -v -l 1 -P "printf '\033Ptmux;\033\033]777;notify;Claude @ tmux:$LOCATION;$body\007\033\\\\'" 2>/dev/null
 }
 
-# jq fallback
+add_bell_indicator() {
+    if [[ ! "$WINDOW_NAME" =~ ^🔔[[:space:]] ]]; then
+        tmux rename-window "🔔 $WINDOW_NAME"
+    fi
+}
+
 json_extract() {
     local json="$1" key="$2"
     echo "$json" | grep -o "\"$key\"[[:space:]]*:[[:space:]]*\"[^\"]*\"" \
@@ -95,6 +101,8 @@ EVENT="$1"
 case "$EVENT" in
     stop|idle)
         osc_notify "$SHORT_PATH ✓"
+        sleep 0.2
+        add_bell_indicator
         ;;
     notification|notify)
         if command -v jq &>/dev/null; then
@@ -104,13 +112,38 @@ case "$EVENT" in
             [ -z "$BODY" ] && BODY="Needs input"
         fi
         osc_notify "$SHORT_PATH: $BODY"
+        sleep 0.2
+        add_bell_indicator
         ;;
 esac
 ```
 
+### 3. Setup Auto-clear 🔔
+
+When switching to a window with 🔔, automatically clear it:
+
+```bash
+# ~/.claude/hooks/tmux-clear-bell.sh
+#!/bin/bash
+WIN_NAME=$(tmux display-message -p '#{window_name}')
+if [[ "$WIN_NAME" =~ ^🔔[[:space:]] ]]; then
+    CLEAN_NAME="${WIN_NAME#🔔 }"
+    tmux rename-window "$CLEAN_NAME"
+fi
+```
+
+```bash
+# Enable focus-events and set hook
+tmux set-option -g focus-events on
+tmux set-hook -g pane-focus-in "run-shell '~/.claude/hooks/tmux-clear-bell.sh'"
+chmod +x ~/.claude/hooks/tmux-clear-bell.sh
+```
+
 Notification format: `Claude @ tmux:3:1` → `Projects/ruodojo ✓` (title shows location, body shows directory)
 
-### 3. Configure Claude Code Hooks
+Window shows `🔔` prefix, which disappears when you switch to it.
+
+### 4. Configure Claude Code Hooks
 
 ```json
 // ~/.claude/settings.json
@@ -128,7 +161,7 @@ Notification format: `Claude @ tmux:3:1` → `Projects/ruodojo ✓` (title shows
 }
 ```
 
-### 4. Make Script Executable
+### 5. Make Script Executable
 
 ```bash
 chmod +x ~/.claude/hooks/cmux-remote-notify.sh
