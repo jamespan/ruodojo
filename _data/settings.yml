@@ -2,6 +2,7 @@ basic_settings:
   site_title: 小鶸の道场
   site_tagline: '世界上只有一种真正的英雄主义，就是认清了生活的真相后还依然热爱它'
   favicon_image: /images/favicon.png
+  header_image: 'https://i0.wp.com/tva3.sinaimg.cn/large/006tNbRwly1fxaxjiumpwj318z0u0at2.jpg'
 
 header_settings:
   logo_image: 
