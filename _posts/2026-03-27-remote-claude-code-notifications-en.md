@@ -1,9 +1,10 @@
 ---
-title: 'Remote Claude Code Notifications: Zero-Dependency OSC Passthrough Solution'
+title: 'Terminal Notifications for Claude Code in Remote tmux'
 date: 2026-03-27
+description: 'Get desktop notifications when Claude Code finishes or needs input in remote tmux sessions — using only OSC 777 escape sequences and tmux passthrough, zero dependencies.'
 ---
 
-I've been using [cmux](https://cmux.com/docs/concepts) to run multiple Claude Code agents in parallel on my local machine — different projects, different tasks, all pushing forward at the same time. cmux has first-class Claude Code integration, so notifications just work: an agent finishes, I get pinged, I switch over. The whole "agent legion" model hums along nicely.
+I've been using [cmux](https://cmux.com/docs/concepts) (a terminal multiplexer with built-in Claude Code integration) to run multiple Claude Code agents in parallel on my local machine — different projects, different tasks, all pushing forward at the same time. Notifications just work: an agent finishes, I get pinged, I switch over. The whole "agent legion" model hums along nicely.
 
 Then I needed to work on a remote server. I SSH'd in, fired up tmux, started Claude Code — and the notifications stopped. Agent finishes, I don't know. Waiting for input, I don't know. I'm back to polling my terminal like it's 2005.
 
@@ -218,8 +219,11 @@ Want this setup on your own machine? The clean markdown version of this article 
 Just feed that file to Claude Code and say:
 
 ```
-Follow the steps in this article to set up remote Claude Code notifications on my machine.
-https://blog.jamespan.tech/md/remote-claude-code-notifications-en.md
+Read the article at https://blog.jamespan.tech/md/remote-claude-code-notifications-en.md,
+then follow its steps to set up remote Claude Code notifications on my machine:
+- Create the hook scripts with the exact code from the article
+- Configure tmux passthrough
+- Configure Claude Code hooks
 ```
 
 Claude Code will read the article, create the hook scripts, configure tmux, and set up the hooks — all automatically. Two minutes, zero manual work.
