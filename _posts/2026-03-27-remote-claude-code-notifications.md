@@ -217,7 +217,10 @@ chmod +x ~/.claude/hooks/cmux-remote-notify.sh
 
 把这个文件喂给 Claude Code，然后说：
 
-> 按照这篇文章的步骤，帮我配置远程 Claude Code 通知。
+```
+按照这篇文章的步骤，帮我配置远程 Claude Code 通知。
+https://blog.jamespan.tech/md/remote-claude-code-notifications.md
+```
 
 Claude Code 会读取文章，创建 hook 脚本，配置 tmux，设置 hooks——全自动。两分钟，零手动操作。
 

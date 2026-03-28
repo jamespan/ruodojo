@@ -217,7 +217,10 @@ Want this setup on your own machine? The clean markdown version of this article 
 
 Just feed that file to Claude Code and say:
 
-> Follow the steps in this article to set up remote Claude Code notifications on my machine.
+```
+Follow the steps in this article to set up remote Claude Code notifications on my machine.
+https://blog.jamespan.tech/md/remote-claude-code-notifications-en.md
+```
 
 Claude Code will read the article, create the hook scripts, configure tmux, and set up the hooks — all automatically. Two minutes, zero manual work.
 
